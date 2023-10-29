@@ -1,0 +1,16 @@
+# Dockerfile.rails
+FROM ruby:3.2.2 AS rails-toolbox
+
+RUN apt-get update -qq && apt-get install -y build-essential apt-utils libpq-dev nodejs
+
+WORKDIR /app
+
+RUN gem install bundler
+
+COPY Gemfile* /app/
+
+RUN bundle install
+
+COPY . .
+
+CMD ["./docker-entrypoint.sh"]
