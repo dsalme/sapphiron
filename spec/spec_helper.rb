@@ -44,6 +44,13 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  config.before(:suite) do
+    if config.files_to_run.any? { |path| path.start_with?(Rails.root.join("spec/system").to_s) }
+      Rails.application.load_tasks
+      Rake::Task["tailwindcss:build"].invoke
+    end
+  end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin

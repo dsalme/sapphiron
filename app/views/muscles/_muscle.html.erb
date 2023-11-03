@@ -1,4 +1,4 @@
-<div id="<%= dom_id muscle %>">
+<div id="<%= dom_id muscle %>" class="border-solid rounded-md border-2 p-2 m-1">
   <p class="my-5">
     <strong class="block font-medium mb-1">Name:</strong>
     <%= muscle.name %>
@@ -11,7 +11,7 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Muscle group:</strong>
-    <%= muscle.muscle_group_id %>
+    <%= muscle.group_name %>
   </p>
 
   <% if action_name != "show" %>

@@ -1,4 +1,4 @@
-<div id="<%= dom_id muscle_group %>">
+<div id="<%= dom_id muscle_group %>" class="border-solid rounded-md border-2 p-2 m-1">
   <p class="my-5">
     <strong class="block font-medium mb-1">Id:</strong>
     <%= muscle_group.id %>
@@ -6,6 +6,7 @@
   <p class="my-5">
     <strong class="block font-medium mb-1">Name:</strong>
     <%= muscle_group.name %>
+    <!--<%= link_to muscle_group.name, muscle_group_path(muscle_group.id) %> -->
   </p>
 
   <p class="my-5">

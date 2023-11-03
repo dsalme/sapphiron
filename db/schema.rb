@@ -10,9 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_29_191835) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_02_215433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercise_movement_patterns", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.bigint "movement_pattern_id", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_exercise_movement_patterns_on_exercise_id"
+    t.index ["movement_pattern_id"], name: "index_exercise_movement_patterns_on_movement_pattern_id"
+  end
+
+  create_table "exercise_muscles", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.bigint "muscle_id", null: false
+    t.integer "predominance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_exercise_muscles_on_exercise_id"
+    t.index ["muscle_id"], name: "index_exercise_muscles_on_muscle_id"
+  end
+
+  create_table "exercise_variants", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.bigint "variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_exercise_variants_on_exercise_id"
+    t.index ["variant_id"], name: "index_exercise_variants_on_variant_id"
+  end
+
+  create_table "exercises", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "difficulty"
+  end
+
+  create_table "movement_patterns", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "muscle_groups", force: :cascade do |t|
     t.string "name"
@@ -30,5 +74,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_29_191835) do
     t.index ["muscle_group_id"], name: "index_muscles_on_muscle_group_id"
   end
 
+  add_foreign_key "exercise_movement_patterns", "exercises"
+  add_foreign_key "exercise_movement_patterns", "movement_patterns"
+  add_foreign_key "exercise_muscles", "exercises"
+  add_foreign_key "exercise_muscles", "muscles"
+  add_foreign_key "exercise_variants", "exercises"
+  add_foreign_key "exercise_variants", "exercises", column: "variant_id"
   add_foreign_key "muscles", "muscle_groups"
 end

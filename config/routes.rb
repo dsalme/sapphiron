@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
+  resources :exercises
+  root 'home#index'
   resources :muscles
   resources :muscle_groups
+  resources :movement_patterns
   #get '/muscle_groups', to: 'muscle_group#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -1,10 +1,10 @@
-<%= form_with(model: muscle, class: "contents") do |form| %>
-  <% if muscle.errors.any? %>
+<%= form_with(model: exercise, class: "contents") do |form| %>
+  <% if exercise.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
-      <h2><%= pluralize(muscle.errors.count, "error") %> prohibited this muscle from being saved:</h2>
+      <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
 
       <ul>
-        <% muscle.errors.each do |error| %>
+        <% exercise.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
@@ -22,9 +22,8 @@
   </div>
 
   <div class="my-5">
-    <%= form.label :muscle_group_id %>
-    <!--<%= form.text_field :muscle_group_id, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>-->
-    <%= form.collection_select :muscle_group_id, @muscle_groups,:id,:name, include_blank: true %>
+    <%= form.label :difficulty %>
+    <%= form.text_field :difficulty, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="inline">
