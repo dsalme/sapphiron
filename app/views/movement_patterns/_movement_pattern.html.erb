@@ -1,0 +1,17 @@
+<div id="<%= dom_id movement_pattern %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= movement_pattern.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= movement_pattern.description %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this movement pattern", movement_pattern, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this movement pattern", edit_movement_pattern_path(movement_pattern), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
