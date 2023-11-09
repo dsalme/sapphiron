@@ -1,22 +1,111 @@
-<div id="<%= dom_id exercise %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= exercise.name %>
-  </p>
+<% if action_name != "show" %>
+  <tr class="table-row">
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.name %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.description %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.difficulty %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.variant_ofs.count %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.variants.count %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= exercise.muscles.count %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <div class="flex flex-row items-center justify-evenly">
+        <% exercise.tools.each do |tool| %>
+          <div class="pl-2">
+            <% if tool.thumbnail_url.present? && lookup_context.exists?(tool.thumbnail_url, [], true) %>
+              <%= link_to tool, :title => tool.name  do %>
+                <%= render partial: tool.thumbnail_url %>
+              <% end %>
+            <% else %>
+              <%= link_to tool.name, tool, :title => tool.name %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <div title=<%= exercise.movement_patterns.map{|movement_pattern| movement_pattern.name }.join('-')%>> 
+        <%= exercise.movement_patterns.count %>
+      </div>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <div class="flex flex-row items-center justify-evenly">
+        <%= link_to exercise do %>
+          <%= render 'shared/view_icon' %>
+        <% end %>
+        <%= link_to edit_exercise_path(exercise), class: "border-1 border-solid rounded-sm" do %>
+          <%= render 'shared/edit_icon' %>
+        <% end %>
+        <hr class="mt-6">
+      </div>
+    </td>
+  </tr>
+<% end %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= exercise.description %>
-  </p>
+<% if action_name == "show" %>
+  <div id="<%= dom_id exercise %>">
+    <p class="my-5">
+      <strong class="font-medium mb-1">Name:</strong>
+      <%= exercise.name %>
+    </p>
 
-   <p class="my-5">
-    <strong class="block font-medium mb-1">Difficulty:</strong>
-    <%= exercise.difficulty %>
-  </p>
+    <p class="my-5">
+      <strong class="font-medium mb-1">Description:</strong>
+      <%= exercise.description %>
+    </p>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this exercise", exercise, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this exercise", edit_exercise_path(exercise), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+    <p class="my-5">
+      <strong class="font-medium mb-1">Difficulty:</strong>
+      <%= exercise.difficulty %>
+    </p>
+
+    <p class="my-5">
+      <strong class="font-medium mb-1">Is variant of:</strong>
+      <%= exercise.variant_ofs.count %>
+    </p>
+
+    <p class="my-5">
+      <strong class="font-medium mb-1">Variants:</strong>
+      <%= exercise.variants.count %>
+    </p>
+
+    <p class="my-5">
+      <strong class="font-medium mb-1">Involved Muscles:</strong>
+      <%= exercise.muscles.count %>
+    </p>
+
+    <p class="my-5">
+      <strong class="font-medium mb-1">Involved movement patterns:</strong>
+      <%= exercise.movement_patterns.count %>
+    </p>
+
+    <div class="flex flex-row items-start justify-normal">
+      <strong class="font-medium mb-1">Tools:</strong>
+        <% exercise.tools.each do |tool| %>
+          <div class="pl-2">
+            <% if tool.thumbnail_url.present? && lookup_context.exists?(tool.thumbnail_url, [], true) %>
+              <%= link_to tool, :title => tool.name  do %>
+                <%= render partial: tool.thumbnail_url %>
+              <% end %>
+            <% else %>
+              <%= link_to tool.name, tool, :title => tool.name %>
+            <% end %>
+          </div>
+        <% end %>
+    </div>
+
+  </div>
+<% end %>
+
+
+

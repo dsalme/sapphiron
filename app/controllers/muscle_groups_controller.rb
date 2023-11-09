@@ -26,7 +26,7 @@ class MuscleGroupsController < ApplicationController
     respond_to do |format|
       if @muscle_group.save
         format.html { redirect_to muscle_group_url(@muscle_group), notice: "Muscle group was successfully created." }
-        format.json { render :show, status: :created, location: @muscle_group }
+        format.json { render :all, status: :created, location: @muscle_group }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @muscle_group.errors, status: :unprocessable_entity }

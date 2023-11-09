@@ -7,8 +7,32 @@
     <h1 class="font-bold text-4xl">Exercises</h1>
     <%= link_to "New exercise", new_exercise_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
-
-  <div id="exercises" class="min-w-full">
-    <%= render @exercises %>
-  </div>
+  <% if action_name == "show" %>
+    <div id="exercises" class="min-w-full">
+      <%= render @exercises %>
+    </div>
+  <%end%>
+  
+  <% if action_name != "show" %>
+    <div class="my-2">
+      <table id="exercises" class="table table-fixed w-full border border-gray-400">
+        <thead class="table-header-group">
+          <tr class="table-row">
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Name</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Description</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Difficulty</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400"># Variant of</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400"># Variants</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Muscles</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Tools</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Mov. Patterns</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @exercises %>
+        </tbody>
+      </table>
+    </div>
+  <%end%>
 </div>
