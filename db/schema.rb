@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_02_215433) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_09_084655) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_02_215433) do
     t.datetime "updated_at", null: false
     t.index ["exercise_id"], name: "index_exercise_muscles_on_exercise_id"
     t.index ["muscle_id"], name: "index_exercise_muscles_on_muscle_id"
+  end
+
+  create_table "exercise_tools", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.bigint "tool_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["exercise_id"], name: "index_exercise_tools_on_exercise_id"
+    t.index ["tool_id"], name: "index_exercise_tools_on_tool_id"
   end
 
   create_table "exercise_variants", force: :cascade do |t|
@@ -74,10 +83,20 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_02_215433) do
     t.index ["muscle_group_id"], name: "index_muscles_on_muscle_group_id"
   end
 
+  create_table "tools", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "thumbnail_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "exercise_movement_patterns", "exercises"
   add_foreign_key "exercise_movement_patterns", "movement_patterns"
   add_foreign_key "exercise_muscles", "exercises"
   add_foreign_key "exercise_muscles", "muscles"
+  add_foreign_key "exercise_tools", "exercises"
+  add_foreign_key "exercise_tools", "tools"
   add_foreign_key "exercise_variants", "exercises"
   add_foreign_key "exercise_variants", "exercises", column: "variant_id"
   add_foreign_key "muscles", "muscle_groups"

@@ -26,6 +26,21 @@
     <%= form.text_field :difficulty, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
+  <div class="my-5 grid grid-cols-3">
+    <div class="flex flex-col">
+      <%= form.label :tools %>
+      <%= form.collection_select :tools, @tools,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+    </div>
+    <div class="flex flex-col ml-1">
+      <%= form.label :muscles %>
+      <%= form.collection_select :muscles, @muscles,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+    </div>
+    <div class="flex flex-col ml-1">
+      <%= form.label :movement_patterns %>
+      <%= form.collection_select :movement_patterns, @movement_patterns,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+    </div>
+  </div>
+
   <div class="inline">
     <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>

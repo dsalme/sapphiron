@@ -1,0 +1,5 @@
+<% if local_assigns[:equipment] %>
+    <% if equipment.thumbnail_url.present? && lookup_context.exists?(equipment.thumbnail_url, [], true) %>
+        <%= render partial: equipment.thumbnail_url %>
+    <% end %>
+<% end %>

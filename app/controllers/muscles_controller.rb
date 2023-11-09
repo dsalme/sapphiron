@@ -3,13 +3,12 @@ class MusclesController < ApplicationController
 
   # GET /muscles or /muscles.json
   def index
-    @muscles = Muscle.select(
-      'muscles.id, muscles.name, muscles.description, muscle_groups.name as group_name'
-      ).joins(:muscle_group).order('group_name asc')
+    @muscles = Muscle.all.includes(:muscle_group, :exercises)
   end
 
   # GET /muscles/1 or /muscles/1.json
   def show
+    @muscle = Muscle.includes(:muscle_group, :exercises).find(params[:id])
   end
 
   # GET /muscles/new
@@ -20,6 +19,7 @@ class MusclesController < ApplicationController
 
   # GET /muscles/1/edit
   def edit
+    @muscle_groups = MuscleGroup.order(:name)
   end
 
   # POST /muscles or /muscles.json

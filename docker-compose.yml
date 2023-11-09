@@ -17,7 +17,7 @@ services:
   db:
     image: postgres:13
     ports:
-      - 5432:5432  # mapeo host:5433 a container:5432 (postgresql)
+      - 5433:5432  # mapeo host:5433 a container:5432 (postgresql)
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

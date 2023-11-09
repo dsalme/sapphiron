@@ -11,7 +11,12 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Muscle group:</strong>
-    <%= muscle.group_name %>
+    <%= muscle.muscle_group.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1"># Exercises:</strong>
+    <%= muscle.exercises.count %>
   </p>
 
   <% if action_name != "show" %>

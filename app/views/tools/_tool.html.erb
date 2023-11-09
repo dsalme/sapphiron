@@ -1,0 +1,26 @@
+<div id="<%= dom_id tool %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= tool.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= tool.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Thumbnail url:</strong>
+    <%= tool.thumbnail_url %>
+  </p>
+  
+  <% if tool.thumbnail_url.present? && lookup_context.exists?(tool.thumbnail_url, [], true) %>
+    <%= render partial: tool.thumbnail_url %>
+  <% end %>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this tool", tool, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this tool", edit_tool_path(tool), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
