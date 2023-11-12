@@ -11,9 +11,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="font-sans">
+    <%= render 'layouts/header'%>
+    <div class="grid grid-cols-6 gap-4">
+      <%= render 'layouts/navbar'%>
+      <main class="col-span-5">
+        <%= yield %>
+      </main>
+    </div>
+    <%= render 'layouts/footer'%>
   </body>
 </html>

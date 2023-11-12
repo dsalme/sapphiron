@@ -28,10 +28,10 @@ class ExercisesController < ApplicationController
 
   # POST /exercises or /exercises.json
   def create
-    @exercise = Exercise.new(exercise_params.except(:tools, :movement_patterns, :muscles))
-    create_or_delete_exercise_tools(@exercise, params[:exercise][:tools])
-    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_patterns])
-    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscles])
+    @exercise = Exercise.new(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
+    create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
+    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
+    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
 
     respond_to do |format|
       if @exercise.save
@@ -46,11 +46,11 @@ class ExercisesController < ApplicationController
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
-    create_or_delete_exercise_tools(@exercise, params[:exercise][:tools])
-    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_patterns])
-    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscles])
+    create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
+    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
+    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
     respond_to do |format|
-      if @exercise.update(exercise_params.except(:tools, :movement_patterns, :muscles))
+      if @exercise.update(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
         format.html { redirect_to exercise_url(@exercise), notice: "Exercise was successfully updated." }
         format.json { render :show, status: :ok, location: @exercise }
       else
@@ -72,27 +72,27 @@ class ExercisesController < ApplicationController
 
   private
     # tools assignment
-    def create_or_delete_exercise_tools(exercise, tools)
+    def create_or_delete_exercise_tools(exercise, tool_ids)
       exercise.exercise_tools.destroy_all
-      tools.each do |tool|
+      tool_ids.each do |tool|
         if !tool.nil? && !tool.empty?
           exercise.tools << Tool.find(tool)
         end
       end
     end
 
-    def create_or_delete_exercise_movement_patterns(exercise, movement_patterns)
+    def create_or_delete_exercise_movement_patterns(exercise, movement_pattern_ids)
       exercise.exercise_movement_patterns.destroy_all
-      movement_patterns.each do |movement_pattern|
+      movement_pattern_ids.each do |movement_pattern|
         if !movement_pattern.nil? && !movement_pattern.empty?
           exercise.movement_patterns << MovementPattern.find(movement_pattern)
         end
       end
     end
 
-    def create_or_delete_exercise_muscles(exercise, muscles)
+    def create_or_delete_exercise_muscles(exercise, muscle_ids)
       exercise.exercise_muscles.destroy_all
-      muscles.each do |muscle|
+      muscle_ids.each do |muscle|
         if !muscle.nil? && !muscle.empty?
           exercise.muscles << Muscle.find(muscle)
         end
@@ -105,6 +105,6 @@ class ExercisesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exercise_params
-      params.require(:exercise).permit(:name, :description, :difficulty, :tools, :movement_patterns, :muscles)
+      params.require(:exercise).permit(:name, :description, :difficulty, :tool_ids, :movement_pattern_ids, :muscle_ids)
     end
 end

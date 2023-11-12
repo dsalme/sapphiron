@@ -1,5 +1,5 @@
 <% if action_name != "show" %>
-  <tr class="table-row">
+  <tr id="<%= dom_id exercise %>" class="table-row">
     <td class="table-cell text-center border border-gray-400">
       <%= exercise.name %>
     </td>
@@ -7,7 +7,7 @@
       <%= exercise.description %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= exercise.difficulty %>
+      <meter min="1" max="5" low="1" high="4" value="<%= exercise.difficulty %>"><%= exercise.difficulty %></meter>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <%= exercise.variant_ofs.count %>
@@ -34,7 +34,7 @@
       </div>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <div title=<%= exercise.movement_patterns.map{|movement_pattern| movement_pattern.name }.join('-')%>> 
+      <div title=<%= exercise.movement_patterns.map{|pattern| pattern.name }.join(',')%>> 
         <%= exercise.movement_patterns.count %>
       </div>
     </td>
@@ -81,12 +81,12 @@
 
     <p class="my-5">
       <strong class="font-medium mb-1">Involved Muscles:</strong>
-      <%= exercise.muscles.count %>
+      <%= exercise.muscles.map{|muscle| muscle.name}.join(', ') %>
     </p>
 
     <p class="my-5">
       <strong class="font-medium mb-1">Involved movement patterns:</strong>
-      <%= exercise.movement_patterns.count %>
+      <%= exercise.movement_patterns.map{|pattern| pattern.name}.join(', ') %>
     </p>
 
     <div class="flex flex-row items-start justify-normal">
