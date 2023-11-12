@@ -29,15 +29,24 @@
   <div class="my-5 grid grid-cols-3">
     <div class="flex flex-col">
       <%= form.label :tools %>
-      <%= form.collection_select :tools, @tools,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+      <%= 
+        form.collection_check_boxes :tool_ids, @tools,:id,:name, {selected: exercise.tool_ids, 
+        include_blank: false}, {:multiple => true, size: @tools.count } 
+      %>
     </div>
     <div class="flex flex-col ml-1">
       <%= form.label :muscles %>
-      <%= form.collection_select :muscles, @muscles,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+      <%= 
+        form.collection_check_boxes :muscle_ids, @muscles,:id,:name, {selected: exercise.muscle_ids, 
+        include_blank: false}, {:multiple => true, size: @muscles.count } 
+      %>
     </div>
     <div class="flex flex-col ml-1">
       <%= form.label :movement_patterns %>
-      <%= form.collection_select :movement_patterns, @movement_patterns,:id,:name, include_blank: true, multiple: true, class: 'form-multiselect' %>
+      <%= 
+        form.collection_check_boxes :movement_pattern_ids, @movement_patterns,:id,:name, {selected: exercise.movement_pattern_ids, 
+        include_blank: false}, {:multiple => true, size: @movement_patterns.count } 
+      %>
     </div>
   </div>
 

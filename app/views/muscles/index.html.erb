@@ -8,7 +8,28 @@
     <%= link_to "New muscle", new_muscle_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="muscles" class="min-w-full grid grid-cols-3">
-    <%= render @muscles %>
-  </div>
+  <% if action_name == "show" %>
+    <div id="muscles" class="min-w-full">
+      <%= render @muscles %>
+    </div>
+  <%end%>
+  
+  <% if action_name != "show" %>
+    <div class="my-2">
+      <table id="muscles" class="table table-fixed w-full border border-gray-400">
+        <thead class="table-header-group">
+          <tr class="table-row">
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Name</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Description</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Muscle Group</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Exercises</th>
+            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render @muscles %>
+        </tbody>
+      </table>
+    </div>
+  <%end%>
 </div>

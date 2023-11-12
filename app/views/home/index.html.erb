@@ -1,29 +1,9 @@
-<div id="home_page">
-  <header>
-    <h1 class="font-bold text-4xl">Sapphiron</h1>
-  </header>
-  <nav>
-      <ul class="flex flex-col">
-        <% @url_map.each do |url|%>
-          <li>
-            <%= link_to url["name"], url["path"], class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
-          </li>
-        <%end%>
-      </ul>
-    </nav>
-  <main>
-    <div class="flex flex-row">
-      <%= image_tag 'sapphiron_dumbell.png', {width: '100px'}%>
-    </div>
-    
-    <div class="lg:flex sm:gap-x-[24px] lg:justify-center lg:flex-nowrap w-96 h-96">
-      <%= render partial: 'shared/body_front_basic_map' %>
-      <%= render partial: 'shared/body_back_basic_map' %>
-    </div>
-    
-  </main>
-  
-  <footer>
-    cosas
-  </footer>
+<div class="flex flex-row">
+  <%= image_tag 'sapphiron_dumbell.png', class: 'w-32 h-32'%>
 </div>
+
+<div class="lg:flex sm:gap-x-[24px] lg:justify-center lg:flex-nowrap w-96 h-96">
+  <%= render partial: 'shared/body_front_basic_map' %>
+  <%= render partial: 'shared/body_back_basic_map' %>
+</div>
+

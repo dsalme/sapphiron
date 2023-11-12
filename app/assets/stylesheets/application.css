@@ -14,33 +14,23 @@
  *= require_self
  */
 
-#home_page {
-    display: grid;
-    width: 100%;
-    grid-template-areas:
-        "head head head"
-        "nav main main"
-        "foot foot foot";
-    grid-template-rows: 50px 1fr 50px;
-    grid-template-columns: 150px 1fr 1fr;
+main {
+    min-height: calc(100vh - 3.5rem);
+    padding-top: 3.5rem;
 }
 
-#home_page>header {
-    grid-area: head;
-    background-color: #8ca0ff;
+aside {
+    min-height: calc(100vh - 3.5rem);
+    padding-top: 3.5rem;
 }
 
-#home_page>nav {
-    grid-area: nav;
-    background-color: #ffa08c;
+.header-transition {
+    transition: transform 0.3s ease-in-out;
 }
 
-#home_page>main {
-    grid-area: main;
-    background-color: #ffff64;
-}
-
-#home_page>footer {
-    grid-area: foot;
-    background-color: #8cffa0;
+aside>nav>ul>li:hover {
+    cursor: pointer;
+    background-color: rgb(68, 20, 77);
+    color: white;
+    border-color: white;
 }

@@ -1,27 +1,60 @@
-<div id="<%= dom_id muscle_group %>" class="border-solid rounded-md border-2 p-2 m-1">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Id:</strong>
-    <%= muscle_group.id %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= muscle_group.name %>
-    <!--<%= link_to muscle_group.name, muscle_group_path(muscle_group.id) %> -->
-  </p>
+<% if action_name != "show" %>
+  <tr id="<%= dom_id muscle_group %>" class="table-row">
+    <td class="table-cell text-center border border-gray-400">
+      <%= muscle_group.name %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= muscle_group.description %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= muscle_group.muscles.count %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      0
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <div class="flex flex-row items-center justify-evenly">
+        <%= link_to muscle_group do %>
+          <%= render 'shared/view_icon' %>
+        <% end %>
+        <%= link_to edit_muscle_group_path(muscle_group), class: "border-1 border-solid rounded-sm" do %>
+          <%= render 'shared/edit_icon' %>
+        <% end %>
+        <hr class="mt-6">
+      </div>
+    </td>
+  </tr>
+<% end %>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Description:</strong>
-    <%= muscle_group.description %>
-  </p>
+<% if action_name == "show" %>
+  <div id="<%= dom_id muscle_group %>" class="border-solid rounded-md border-2 p-2 m-1">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Id:</strong>
+      <%= muscle_group.id %>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Name:</strong>
+      <%= muscle_group.name %>
+      <!--<%= link_to muscle_group.name, muscle_group_path(muscle_group.id) %> -->
+    </p>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1"># Muscles:</strong>
-    <%= muscle_group.muscles.count %>
-  </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Description:</strong>
+      <%= muscle_group.description %>
+    </p>
 
-  <% if action_name != "show" %>
-    <%= link_to "Show this muscle group", muscle_group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <%= link_to "Edit this muscle group", edit_muscle_group_path(muscle_group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
-    <hr class="mt-6">
-  <% end %>
-</div>
+    <p class="my-5">
+      <strong class="block font-medium mb-1"># Muscles:</strong>
+      <%= muscle_group.muscles.count %>
+    </p>
+
+    <% if action_name != "show" %>
+      <%= link_to "Show this muscle group", muscle_group, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+      <%= link_to "Edit this muscle group", edit_muscle_group_path(muscle_group), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+      <hr class="mt-6">
+    <% end %>
+  </div>
+<% end %>
+
+
+
