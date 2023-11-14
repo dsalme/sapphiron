@@ -1,9 +1,21 @@
 class ExercisesController < ApplicationController
   before_action :set_exercise, only: %i[ show edit update destroy ]
+  before_action :set_select_collections, only: [:edit, :update, :new, :create]
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.all.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    @tools = Tool.all
+  end
+
+  def filter
+    exercises = Exercise
+      .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    if !params[:tool_id].empty?
+      exercises = exercises.where(tools: { id: params[:tool_id]})
+    end
+      #.order("#{params[:column]} #{params[:direction]}")
+    render(partial: 'exercises', locals: { exercises: exercises })
   end
 
   # GET /exercises/1 or /exercises/1.json
@@ -97,6 +109,12 @@ class ExercisesController < ApplicationController
           exercise.muscles << Muscle.find(muscle)
         end
       end
+    end
+
+    def set_select_collections
+      @muscles = Muscle.all
+      @tools = Tool.all
+      @movement_patterns = MovementPattern.all
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_exercise

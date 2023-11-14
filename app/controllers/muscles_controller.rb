@@ -1,5 +1,6 @@
 class MusclesController < ApplicationController
   before_action :set_muscle, only: %i[ show edit update destroy ]
+  before_action :set_select_collections, only: [:edit, :update, :new, :create]
 
   # GET /muscles or /muscles.json
   def index
@@ -64,6 +65,10 @@ class MusclesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_muscle
       @muscle = Muscle.find(params[:id])
+    end
+
+    def set_select_collections
+      @muscle_groups = MuscleGroup.all
     end
 
     # Only allow a list of trusted parameters through.

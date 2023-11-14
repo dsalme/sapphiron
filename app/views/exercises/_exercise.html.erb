@@ -10,20 +10,20 @@
       <meter min="1" max="5" low="1" high="4" value="<%= exercise.difficulty %>"><%= exercise.difficulty %></meter>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= exercise.variant_ofs.count %>
+      <%= exercise.variant_ofs.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= exercise.variants.count %>
+      <%= exercise.variants.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= exercise.muscles.count %>
+      <%= exercise.muscles.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <div class="flex flex-row items-center justify-evenly">
         <% exercise.tools.each do |tool| %>
           <div class="pl-2">
             <% if tool.thumbnail_url.present? && lookup_context.exists?(tool.thumbnail_url, [], true) %>
-              <%= link_to tool, :title => tool.name  do %>
+              <%= link_to tool, {title: tool.name, "data-turbo-frame": "_top"}  do %>
                 <%= render partial: tool.thumbnail_url %>
               <% end %>
             <% else %>
@@ -35,15 +35,15 @@
     </td>
     <td class="table-cell text-center border border-gray-400">
       <div title=<%= exercise.movement_patterns.map{|pattern| pattern.name }.join(',')%>> 
-        <%= exercise.movement_patterns.count %>
+        <%= exercise.movement_patterns.length %>
       </div>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <div class="flex flex-row items-center justify-evenly">
-        <%= link_to exercise do %>
+        <%= link_to exercise, {"data-turbo-frame": "_top"} do %>
           <%= render 'shared/view_icon' %>
         <% end %>
-        <%= link_to edit_exercise_path(exercise), class: "border-1 border-solid rounded-sm" do %>
+        <%= link_to edit_exercise_path(exercise), {class: "border-1 border-solid rounded-sm", "data-turbo-frame": "_top"} do %>
           <%= render 'shared/edit_icon' %>
         <% end %>
         <hr class="mt-6">

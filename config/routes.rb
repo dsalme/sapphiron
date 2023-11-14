@@ -1,10 +1,18 @@
 Rails.application.routes.draw do
   root 'home#index'
-  resources :exercises
+  resources :exercises do
+    collection do
+      get 'filter'
+    end
+  end
   resources :movement_patterns
   resources :muscles
   resources :muscle_groups
-  resources :tools
+  resources :tools do
+    collection do
+      get 'list'
+    end
+  end
   #get '/muscle_groups', to: 'muscle_group#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

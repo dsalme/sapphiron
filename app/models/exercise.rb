@@ -9,5 +9,5 @@ class Exercise < ApplicationRecord
     has_many :variant_ofs, through: :reverse_exercise_variants, source: :exercise
     has_many :exercise_tools, dependent: :destroy
     has_many :tools, through: :exercise_tools
-    validates :name, uniqueness: true
+    validates :name, uniqueness: true, presence: true
 end
