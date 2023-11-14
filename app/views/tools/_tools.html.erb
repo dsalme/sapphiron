@@ -1,0 +1,25 @@
+<% if action_name != "show" %>
+<turbo-frame id="tools">
+  <table class="table table-fixed w-full border border-gray-400">
+    <thead class="table-header-group">
+      <tr class="table-row">
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">
+          <%= sort_link(column: "name", label: "Name") %>
+        </th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Description</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Thumbnail</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Exercises</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tools.each do |tool| %>
+          <%= render tool %>
+      <% end %>
+    </tbody>
+  </table>
+</turbo-frame>
+<% end %>
+<% if action_name == "show" %>
+  <%= render tool%>
+<% end %>

@@ -6,6 +6,11 @@ class ToolsController < ApplicationController
     @tools = Tool.all
   end
 
+  def list
+    tools = Tool.includes(:exercises).order("#{params[:column]} #{params[:direction]}")
+    render(partial: 'tools', locals: { tools: tools })
+  end
+
   # GET /tools/1 or /tools/1.json
   def show
   end

@@ -7,28 +7,8 @@
     <h1 class="font-bold text-4xl">Tools</h1>
     <%= link_to "New tool", new_tool_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
-
-  <% if action_name == "show" %>
-    <div id="tools" class="min-w-full">
-      <%= render @tools %>
-    </div>
-  <%end%>
   
-  <% if action_name != "show" %>
-    <div class="my-2">
-      <table id="tools" class="table table-fixed w-full border border-gray-400">
-        <thead class="table-header-group">
-          <tr class="table-row">
-            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Name</th>
-            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Description</th>
-            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Exercises</th>
-            <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= render @tools %>
-        </tbody>
-      </table>
-    </div>
-  <%end%>
+  <div class="my-2">
+    <%= render "tools", tools: @tools %>
+  </div>
 </div>

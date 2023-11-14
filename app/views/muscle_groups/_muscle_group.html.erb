@@ -3,11 +3,11 @@
     <td class="table-cell text-center border border-gray-400">
       <%= muscle_group.name %>
     </td>
-    <td class="table-cell text-center border border-gray-400">
+    <td class="table-cell text-center overflow-hidden whitespace-nowrap border text-ellipsis border-gray-400">
       <%= muscle_group.description %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= muscle_group.muscles.count %>
+      <%= muscle_group.muscles.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
       0
@@ -45,7 +45,7 @@
 
     <p class="my-5">
       <strong class="block font-medium mb-1"># Muscles:</strong>
-      <%= muscle_group.muscles.count %>
+      <%= muscle_group.muscles.length %>
     </p>
 
     <% if action_name != "show" %>
