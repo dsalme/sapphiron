@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  trigger-squash:
+  trigger-commit:
     if: github.event.label.name == 'merge-ready'
     runs-on: ubuntu-latest
     permissions:
