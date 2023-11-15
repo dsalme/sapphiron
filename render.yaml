@@ -1,0 +1,25 @@
+databases:
+  - name: postgres
+    databaseName: sapphiron_prod
+    plan: free
+    ipAllowList: []
+
+services:
+  - type: web
+    name: sapphiron
+    runtime: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: bundle exec rails s
+    envVars:
+      - key: DEFAULT_DATABASE_HOST
+        fromDatabase:
+          name: postgres
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
+    plan: free
+  - type: redis
+    name: redis
+    ipAllowList: []
+    plan: free
+    maxmemoryPolicy: noeviction
