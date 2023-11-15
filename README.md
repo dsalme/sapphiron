@@ -18,7 +18,7 @@ Things you may want to cover:
 * Database Seed:
 
 In a terminal, navigate to the project root folder and run:
-`docker-compose run web rake db:seed`
+`docker-compose run web rails db:seed`
 
 * How to run the test suite
 
