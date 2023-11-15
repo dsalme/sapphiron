@@ -11,7 +11,7 @@ services:
     buildCommand: "./bin/render-build.sh"
     startCommand: bundle exec rails s
     envVars:
-      - key: DEFAULT_DATABASE_HOST
+      - key: DEFAULT_DATABASE_URL
         fromDatabase:
           name: postgres
           property: connectionString
@@ -22,6 +22,8 @@ services:
       - key: DEFAULT_DATABASE_PASSWORD
         sync: false
       - key: DEFAULT_DATABASE_NAME
+        sync: false
+      - key: DEFAULT_DATABASE_HOST
         sync: false
     plan: free
   - type: redis
