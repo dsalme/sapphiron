@@ -1,0 +1,35 @@
+name: "Squash merge"
+on:
+  pull_request:
+    types: [labeled]
+    branches:
+      - main
+
+jobs:
+  trigger-squash:
+    if: github.event.label.name == 'merge-ready'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Attempt merge message
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            Your PR has been added to the merge queue.
+            Squash merge strategy is used for this branch.
+          reactions: "+1"
+      - name: "Merge pull request with squash"
+        uses: "actions/github-script@v2"
+        with:
+          github-token: "${{ secrets.GH_REPO_TOKEN }}"
+          script: |
+            const pullRequest = context.payload.pull_request
+            const repository = context.repo
+            await github.pulls.merge({
+              merge_method: "merge",
+              owner: repository.owner,
+              pull_number: pullRequest.number,
+              repo: repository.repo,
+              })
