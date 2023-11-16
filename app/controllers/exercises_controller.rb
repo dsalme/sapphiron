@@ -6,13 +6,17 @@ class ExercisesController < ApplicationController
   def index
     @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     @tools = Tool.all
+    @muscles = Muscle.all
   end
 
   def filter
     exercises = Exercise
       .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
-    if !params[:tool_id].empty?
+    if params[:tool_id].present? && !params[:tool_id].empty?
       exercises = exercises.where(tools: { id: params[:tool_id]})
+    end
+    if params[:muscle_id].present? && !params[:muscle_id].empty?
+      exercises = exercises.where(muscles: { id: params[:muscle_id]})
     end
       #.order("#{params[:column]} #{params[:direction]}")
     render(partial: 'exercises', locals: { exercises: exercises })
@@ -27,14 +31,14 @@ class ExercisesController < ApplicationController
   def new
     @exercise = Exercise.new
     @movement_patterns = MovementPattern.all
-    @muscles = Muscle.all
+    @muscle_groups = MuscleGroup.includes(:muscles)
     @tools = Tool.all
   end
 
   # GET /exercises/1/edit
   def edit
     @movement_patterns = MovementPattern.all
-    @muscles = Muscle.all
+    @muscle_groups = MuscleGroup.includes(:muscles)
     @tools = Tool.all
   end
 

@@ -8,9 +8,13 @@
     <%= link_to "New exercise", new_exercise_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
   
-  <div class="my-2 flex flex-row justify-between">
+  <div class="my-2 flex flex-row gap-3">
     <%= form_tag filter_exercises_path, method: :get, remote: true, id: 'filter-form' do %>
       <%= select_tag 'tool_id', options_from_collection_for_select(@tools, 'id', 'name'), {prompt: "Tools"} %>
+      <%= submit_tag 'Filter', {class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium","data-turbo-frame": 'exercise-table'} %>
+    <% end %>
+    <%= form_tag filter_exercises_path, method: :get, remote: true, id: 'filter-form' do %>
+      <%= select_tag 'muscle_id', options_from_collection_for_select(@muscles, 'id', 'name'), {prompt: "Muscles"} %>
       <%= submit_tag 'Filter', {class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium","data-turbo-frame": 'exercise-table'} %>
     <% end %>
   </div>

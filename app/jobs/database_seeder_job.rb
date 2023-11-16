@@ -44,7 +44,7 @@ class DatabaseSeederJob < ApplicationJob
       Muscle.create!(
         name: "Biceps",
         description: Faker::Lorem.sentence,
-        muscle_group: MuscleGroup.find_by(name: "Legs")
+        muscle_group: MuscleGroup.find_by(name: "Arms")
       )
       Muscle.create!(
         name: "Triceps",
