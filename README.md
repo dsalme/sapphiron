@@ -7,12 +7,18 @@ Things you may want to cover:
 
 * Ruby version: ruby:3.2.2
 
+
+* System dependencies: 
+    - Docker
+    - RVM
+
 * How to run the app: 
     `docker-compose build`
     `docker-compose up`
     The initializacion script (`/docker-entrypoint.sh`) creates the db if it doesn't exist and runs db migrations.
 
-* System dependencies: 
+* How pre-commit was setup:
+    https://betterprogramming.pub/git-hooks-for-your-rails-app-to-run-rubocop-brakeman-and-rspec-on-push-or-commit-ab51cd65e713
 
 * Configuration
 
