@@ -1,16 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe "muscles/edit", type: :view do
+  let(:muscle_group) { MuscleGroup.create!(name: "Legs") }
   let(:muscle) {
     Muscle.create!(
       name: "MyString",
       description: "MyText",
-      muscle_group: nil
+      muscle_group: muscle_group
     )
   }
 
   before(:each) do
     assign(:muscle, muscle)
+    assign(:muscle_groups, [muscle_group])
   end
 
   it "renders the edit muscle form" do
@@ -22,7 +24,7 @@ RSpec.describe "muscles/edit", type: :view do
 
       assert_select "textarea[name=?]", "muscle[description]"
 
-      assert_select "input[name=?]", "muscle[muscle_group_id]"
+      assert_select "select[name=?]", "muscle[muscle_group_id]"
     end
   end
 end

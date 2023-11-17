@@ -11,16 +11,17 @@ Things you may want to cover:
 * System dependencies: 
     - Docker
     - RVM
+    - Pre-commit: run `./scripts/install-hooks.bash` (`docker-compose up` already does this so you can skip this)(for further info read "How pre-commit was setup" down below)
 
 * How to run the app: 
     `docker-compose build`
     `docker-compose up`
     The initializacion script (`/docker-entrypoint.sh`) creates the db if it doesn't exist and runs db migrations.
 
-* How pre-commit was setup:
-    https://betterprogramming.pub/git-hooks-for-your-rails-app-to-run-rubocop-brakeman-and-rspec-on-push-or-commit-ab51cd65e713
-
 * Configuration
+
+    - How pre-commit was setup:
+        https://betterprogramming.pub/git-hooks-for-your-rails-app-to-run-rubocop-brakeman-and-rspec-on-push-or-commit-ab51cd65e713
 
 * Database creation
     `docker-compose run web db:create`
