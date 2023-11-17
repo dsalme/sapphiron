@@ -16,7 +16,7 @@ Things you may want to cover:
 * How to run the app: 
     `docker-compose build`
     `docker-compose up`
-    The initializacion script (`/docker-entrypoint.sh`) creates the db if it doesn't exist and runs db migrations.
+    The initializacion script (`/docker-entrypoint.sh`) creates the db if it doesn't exist and runs db migrations. This script is run by `docker-compose up` every time so you don't need to run it manually.
 
 * Configuration
 
