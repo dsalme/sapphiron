@@ -1,10 +1,11 @@
 class ExercisesController < ApplicationController
+  before_action -> { rodauth.require_authentication }, only: %i[create edit update new destroy]
   before_action :set_exercise, only: %i[ show edit update destroy ]
   before_action :set_select_collections, only: [:edit, :update, :new, :create]
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account)
     @tools = Tool.all
     @muscles = Muscle.all
   end
@@ -44,10 +45,16 @@ class ExercisesController < ApplicationController
 
   # POST /exercises or /exercises.json
   def create
+    @movement_patterns = MovementPattern.all
+    @muscle_groups = MuscleGroup.includes(:muscles)
+    @tools = Tool.all
+
     @exercise = Exercise.new(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
     create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
     create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
     create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
+
+    @exercise.account_id = current_account.id
 
     respond_to do |format|
       if @exercise.save
@@ -127,6 +134,6 @@ class ExercisesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def exercise_params
-      params.require(:exercise).permit(:name, :description, :difficulty, :tool_ids, :movement_pattern_ids, :muscle_ids)
+      params.require(:exercise).permit(:name, :description, :difficulty, :tool_ids => [], :movement_pattern_ids => [], :muscle_ids => [])
     end
 end

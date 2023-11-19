@@ -1,4 +1,5 @@
 class MusclesController < ApplicationController
+  before_action -> { rodauth.require_authentication }
   before_action :set_muscle, only: %i[ show edit update destroy ]
   before_action :set_select_collections, only: [:edit, :update, :new, :create]
 
