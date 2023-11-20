@@ -25,6 +25,16 @@ RSpec.describe "/exercises", type: :request do
     skip("Add a hash of attributes invalid for your model")
   }
 
+  def login(email, password)
+    post "/login", params: { email: email, password: password }
+    assert_redirected_to "/"
+  end
+
+  def logout
+    post "/logout"
+    assert_redirected_to "/login"
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       Exercise.create! valid_attributes
@@ -42,9 +52,17 @@ RSpec.describe "/exercises", type: :request do
   end
 
   describe "GET /new" do
+    before do
+      account = Account.create!(email: "user@example.com", password: "secret123", status: "verified")
+      Profile.create!(name: "hola", account: account)
+      login(account.email, "secret123")
+    end
     it "renders a successful response" do
       get new_exercise_url
       expect(response).to be_successful
+    end
+    after do
+      logout
     end
   end
 
