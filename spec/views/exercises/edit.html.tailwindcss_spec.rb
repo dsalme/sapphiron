@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "exercises/edit", type: :view do
-  let(:account) {Account.create!(email: "user@example.com", password: "secret123", status: "verified")}
   let(:muscle_group) { MuscleGroup.create!(name: "Legs") }
   let(:muscle) { Muscle.create!(name: "Quadriceps", muscle_group: muscle_group) }
-  let(:exercise) { Exercise.create!(name: "Squats", description: "Leg exercise", account: account) }
+  let(:exercise) { Exercise.create!(name: "Squats", description: "Leg exercise") }
 
 
   before(:each) do

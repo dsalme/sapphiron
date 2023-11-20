@@ -1,18 +1,17 @@
 class ExercisesController < ApplicationController
-  before_action -> { rodauth.require_authentication }, only: %i[create edit update new destroy]
   before_action :set_exercise, only: %i[ show edit update destroy ]
   before_action :set_select_collections, only: [:edit, :update, :new, :create]
 
   # GET /exercises or /exercises.json
   def index
-    @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account)
+    @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     @tools = Tool.all
     @muscles = Muscle.all
   end
 
   def filter
     exercises = Exercise
-      .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account)
+      .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     if params[:tool_id].present? && !params[:tool_id].empty?
       exercises = exercises.where(tools: { id: params[:tool_id]})
     end
@@ -25,7 +24,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
-    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account).find(params[:id])
+    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs).find(params[:id])
   end
 
   # GET /exercises/new
@@ -45,16 +44,11 @@ class ExercisesController < ApplicationController
 
   # POST /exercises or /exercises.json
   def create
-    @movement_patterns = MovementPattern.all
-    @muscle_groups = MuscleGroup.includes(:muscles)
-    @tools = Tool.all
 
     @exercise = Exercise.new(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
     create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
     create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
     create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
-
-    @exercise.account_id = current_account.id
 
     respond_to do |format|
       if @exercise.save
