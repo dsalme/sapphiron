@@ -1,5 +1,4 @@
 class ToolsController < ApplicationController
-  before_action -> { rodauth.require_authentication }
   before_action :set_tool, only: %i[ show edit update destroy ]
 
   # GET /tools or /tools.json
