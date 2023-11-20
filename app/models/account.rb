@@ -1,3 +1,4 @@
+require 'bcrypt'
 class Account < ApplicationRecord
   include Rodauth::Model(RodauthMain)
   has_many :exercises

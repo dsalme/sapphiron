@@ -12,7 +12,7 @@ class ExercisesController < ApplicationController
 
   def filter
     exercises = Exercise
-      .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+      .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account)
     if params[:tool_id].present? && !params[:tool_id].empty?
       exercises = exercises.where(tools: { id: params[:tool_id]})
     end
@@ -25,7 +25,7 @@ class ExercisesController < ApplicationController
 
   # GET /exercises/1 or /exercises/1.json
   def show
-    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs).find(params[:id])
+    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs, :account).find(params[:id])
   end
 
   # GET /exercises/new
