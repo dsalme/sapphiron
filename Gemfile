@@ -61,8 +61,7 @@ gem "tailwindcss-rails", "~> 2.0"
 gem "pg"
 
 # auth gem
-gem "rodauth-rails"
-gem "jwt"
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

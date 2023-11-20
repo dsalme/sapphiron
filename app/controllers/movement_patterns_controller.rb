@@ -1,5 +1,4 @@
 class MovementPatternsController < ApplicationController
-  before_action -> { rodauth.require_authentication }
   before_action :set_movement_pattern, only: %i[ show edit update destroy ]
 
   # GET /movement_patterns or /movement_patterns.json

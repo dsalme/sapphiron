@@ -10,36 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_17_235341) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_20_214316) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
-
-  create_table "account_login_change_keys", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "login", null: false
-    t.datetime "deadline", null: false
-  end
-
-  create_table "account_password_reset_keys", force: :cascade do |t|
-    t.string "key", null: false
-    t.datetime "deadline", null: false
-    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
-  end
-
-  create_table "account_verification_keys", force: :cascade do |t|
-    t.string "key", null: false
-    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
-  end
-
-  create_table "accounts", force: :cascade do |t|
-    t.integer "status", default: 1, null: false
-    t.citext "email", null: false
-    t.string "password_hash"
-    t.string "account_type", default: "user", null: false
-    t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
-  end
 
   create_table "exercise_movement_patterns", force: :cascade do |t|
     t.bigint "exercise_id", null: false
@@ -85,8 +59,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_235341) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "difficulty"
-    t.bigint "account_id", null: false
-    t.index ["account_id"], name: "index_exercises_on_account_id"
   end
 
   create_table "movement_patterns", force: :cascade do |t|
@@ -112,14 +84,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_235341) do
     t.index ["muscle_group_id"], name: "index_muscles_on_muscle_group_id"
   end
 
-  create_table "profiles", force: :cascade do |t|
-    t.string "name"
-    t.bigint "account_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["account_id"], name: "index_profiles_on_account_id"
-  end
-
   create_table "tools", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -128,9 +92,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_235341) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "account_login_change_keys", "accounts", column: "id"
-  add_foreign_key "account_password_reset_keys", "accounts", column: "id"
-  add_foreign_key "account_verification_keys", "accounts", column: "id"
   add_foreign_key "exercise_movement_patterns", "exercises"
   add_foreign_key "exercise_movement_patterns", "movement_patterns"
   add_foreign_key "exercise_muscles", "exercises"
@@ -139,7 +100,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_17_235341) do
   add_foreign_key "exercise_tools", "tools"
   add_foreign_key "exercise_variants", "exercises"
   add_foreign_key "exercise_variants", "exercises", column: "variant_id"
-  add_foreign_key "exercises", "accounts"
   add_foreign_key "muscles", "muscle_groups"
-  add_foreign_key "profiles", "accounts"
 end
