@@ -4,7 +4,7 @@
       <%= exercise.name %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      <%= exercise.description %>
+      <%= exercise.account.profile.name %>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <meter min="1" max="5" low="1" high="4" value="<%= exercise.difficulty %>"><%= exercise.difficulty %></meter>
@@ -23,11 +23,11 @@
         <% exercise.tools.each do |tool| %>
           <div class="pl-2">
             <% if tool.thumbnail_url.present? && lookup_context.exists?(tool.thumbnail_url, [], true) %>
-              <%= link_to tool, {title: tool.name, "data-turbo-frame": "_top"}  do %>
+              <div title="<%=tool.name%>">
                 <%= render partial: tool.thumbnail_url %>
-              <% end %>
+              </div>
             <% else %>
-              <%= link_to tool.name, tool, :title => tool.name %>
+              <%= tool.name %>
             <% end %>
           </div>
         <% end %>
