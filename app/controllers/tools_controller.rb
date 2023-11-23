@@ -1,5 +1,5 @@
 class ToolsController < ApplicationController
-  before_action :set_tool, only: %i[ show edit update destroy ]
+  before_action :set_tool, only: %i[show edit update destroy]
 
   # GET /tools or /tools.json
   def index
@@ -8,12 +8,11 @@ class ToolsController < ApplicationController
 
   def list
     tools = Tool.includes(:exercises).order("#{params[:column]} #{params[:direction]}")
-    render(partial: 'tools', locals: { tools: tools })
+    render(partial: 'tools', locals: { tools: })
   end
 
   # GET /tools/1 or /tools/1.json
-  def show
-  end
+  def show; end
 
   # GET /tools/new
   def new
@@ -21,8 +20,7 @@ class ToolsController < ApplicationController
   end
 
   # GET /tools/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /tools or /tools.json
   def create
@@ -30,7 +28,7 @@ class ToolsController < ApplicationController
 
     respond_to do |format|
       if @tool.save
-        format.html { redirect_to tool_url(@tool), notice: "Tool was successfully created." }
+        format.html { redirect_to tool_url(@tool), notice: 'Tool was successfully created.' }
         format.json { render :show, status: :created, location: @tool }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +41,7 @@ class ToolsController < ApplicationController
   def update
     respond_to do |format|
       if @tool.update(tool_params)
-        format.html { redirect_to tool_url(@tool), notice: "Tool was successfully updated." }
+        format.html { redirect_to tool_url(@tool), notice: 'Tool was successfully updated.' }
         format.json { render :show, status: :ok, location: @tool }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,19 +55,20 @@ class ToolsController < ApplicationController
     @tool.destroy!
 
     respond_to do |format|
-      format.html { redirect_to tools_url, notice: "Tool was successfully destroyed." }
+      format.html { redirect_to tools_url, notice: 'Tool was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tool
-      @tool = Tool.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def tool_params
-      params.require(:tool).permit(:name, :description, :thumbnail_url)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tool
+    @tool = Tool.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def tool_params
+    params.require(:tool).permit(:name, :description, :thumbnail_url)
+  end
 end

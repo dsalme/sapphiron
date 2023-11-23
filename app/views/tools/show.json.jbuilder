@@ -1,1 +1,1 @@
-json.partial! "tools/tool", tool: @tool
+json.partial! 'tools/tool', tool: @tool
