@@ -1,4 +1,5 @@
 class Exercise < ApplicationRecord
+  belongs_to :user
   has_many :exercise_muscles, dependent: :destroy
   has_many :muscles, through: :exercise_muscles
   has_many :exercise_movement_patterns, dependent: :destroy
