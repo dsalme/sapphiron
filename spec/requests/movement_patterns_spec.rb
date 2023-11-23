@@ -12,94 +12,91 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/movement_patterns", type: :request do
-  
+RSpec.describe '/movement_patterns', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # MovementPattern. As you add validations to MovementPattern, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    skip('Add a hash of attributes valid for your model')
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    skip('Add a hash of attributes invalid for your model')
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
+  describe 'GET /index' do
+    it 'renders a successful response' do
       MovementPattern.create! valid_attributes
       get movement_patterns_url
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
+  describe 'GET /show' do
+    it 'renders a successful response' do
       movement_pattern = MovementPattern.create! valid_attributes
       get movement_pattern_url(movement_pattern)
       expect(response).to be_successful
     end
   end
 
-  describe "GET /new" do
-    it "renders a successful response" do
+  describe 'GET /new' do
+    it 'renders a successful response' do
       get new_movement_pattern_url
       expect(response).to be_successful
     end
   end
 
-  describe "GET /edit" do
-    it "renders a successful response" do
+  describe 'GET /edit' do
+    it 'renders a successful response' do
       movement_pattern = MovementPattern.create! valid_attributes
       get edit_movement_pattern_url(movement_pattern)
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new MovementPattern" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new MovementPattern' do
+        expect do
           post movement_patterns_url, params: { movement_pattern: valid_attributes }
-        }.to change(MovementPattern, :count).by(1)
+        end.to change(MovementPattern, :count).by(1)
       end
 
-      it "redirects to the created movement_pattern" do
+      it 'redirects to the created movement_pattern' do
         post movement_patterns_url, params: { movement_pattern: valid_attributes }
         expect(response).to redirect_to(movement_pattern_url(MovementPattern.last))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new MovementPattern" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new MovementPattern' do
+        expect do
           post movement_patterns_url, params: { movement_pattern: invalid_attributes }
-        }.to change(MovementPattern, :count).by(0)
+        end.to change(MovementPattern, :count).by(0)
       end
 
-    
       it "renders a response with 422 status (i.e. to display the 'new' template)" do
         post movement_patterns_url, params: { movement_pattern: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        skip('Add a hash of attributes valid for your model')
+      end
 
-      it "updates the requested movement_pattern" do
+      it 'updates the requested movement_pattern' do
         movement_pattern = MovementPattern.create! valid_attributes
         patch movement_pattern_url(movement_pattern), params: { movement_pattern: new_attributes }
         movement_pattern.reload
-        skip("Add assertions for updated state")
+        skip('Add assertions for updated state')
       end
 
-      it "redirects to the movement_pattern" do
+      it 'redirects to the movement_pattern' do
         movement_pattern = MovementPattern.create! valid_attributes
         patch movement_pattern_url(movement_pattern), params: { movement_pattern: new_attributes }
         movement_pattern.reload
@@ -107,26 +104,24 @@ RSpec.describe "/movement_patterns", type: :request do
       end
     end
 
-    context "with invalid parameters" do
-    
+    context 'with invalid parameters' do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
         movement_pattern = MovementPattern.create! valid_attributes
         patch movement_pattern_url(movement_pattern), params: { movement_pattern: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
-    
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested movement_pattern" do
+  describe 'DELETE /destroy' do
+    it 'destroys the requested movement_pattern' do
       movement_pattern = MovementPattern.create! valid_attributes
-      expect {
+      expect do
         delete movement_pattern_url(movement_pattern)
-      }.to change(MovementPattern, :count).by(-1)
+      end.to change(MovementPattern, :count).by(-1)
     end
 
-    it "redirects to the movement_patterns list" do
+    it 'redirects to the movement_patterns list' do
       movement_pattern = MovementPattern.create! valid_attributes
       delete movement_pattern_url(movement_pattern)
       expect(response).to redirect_to(movement_patterns_url)

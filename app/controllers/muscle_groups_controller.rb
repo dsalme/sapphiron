@@ -1,5 +1,5 @@
 class MuscleGroupsController < ApplicationController
-  before_action :set_muscle_group, only: %i[ show edit update destroy ]
+  before_action :set_muscle_group, only: %i[show edit update destroy]
 
   # GET /muscle_groups or /muscle_groups.json
   def index
@@ -7,8 +7,7 @@ class MuscleGroupsController < ApplicationController
   end
 
   # GET /muscle_groups/1 or /muscle_groups/1.json
-  def show
-  end
+  def show; end
 
   # GET /muscle_groups/new
   def new
@@ -16,8 +15,7 @@ class MuscleGroupsController < ApplicationController
   end
 
   # GET /muscle_groups/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /muscle_groups or /muscle_groups.json
   def create
@@ -25,7 +23,7 @@ class MuscleGroupsController < ApplicationController
 
     respond_to do |format|
       if @muscle_group.save
-        format.html { redirect_to muscle_group_url(@muscle_group), notice: "Muscle group was successfully created." }
+        format.html { redirect_to muscle_group_url(@muscle_group), notice: 'Muscle group was successfully created.' }
         format.json { render :all, status: :created, location: @muscle_group }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,7 @@ class MuscleGroupsController < ApplicationController
   def update
     respond_to do |format|
       if @muscle_group.update(muscle_group_params)
-        format.html { redirect_to muscle_group_url(@muscle_group), notice: "Muscle group was successfully updated." }
+        format.html { redirect_to muscle_group_url(@muscle_group), notice: 'Muscle group was successfully updated.' }
         format.json { render :show, status: :ok, location: @muscle_group }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +50,20 @@ class MuscleGroupsController < ApplicationController
     @muscle_group.destroy!
 
     respond_to do |format|
-      format.html { redirect_to muscle_groups_url, notice: "Muscle group was successfully destroyed." }
+      format.html { redirect_to muscle_groups_url, notice: 'Muscle group was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_muscle_group
-      @muscle_group = MuscleGroup.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def muscle_group_params
-      params.require(:muscle_group).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_muscle_group
+    @muscle_group = MuscleGroup.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def muscle_group_params
+    params.require(:muscle_group).permit(:name, :description)
+  end
 end

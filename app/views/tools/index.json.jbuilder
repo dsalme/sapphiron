@@ -1,1 +1,1 @@
-json.array! @tools, partial: "tools/tool", as: :tool
+json.array! @tools, partial: 'tools/tool', as: :tool

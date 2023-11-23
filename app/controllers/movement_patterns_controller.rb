@@ -1,5 +1,5 @@
 class MovementPatternsController < ApplicationController
-  before_action :set_movement_pattern, only: %i[ show edit update destroy ]
+  before_action :set_movement_pattern, only: %i[show edit update destroy]
 
   # GET /movement_patterns or /movement_patterns.json
   def index
@@ -7,8 +7,7 @@ class MovementPatternsController < ApplicationController
   end
 
   # GET /movement_patterns/1 or /movement_patterns/1.json
-  def show
-  end
+  def show; end
 
   # GET /movement_patterns/new
   def new
@@ -16,8 +15,7 @@ class MovementPatternsController < ApplicationController
   end
 
   # GET /movement_patterns/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /movement_patterns or /movement_patterns.json
   def create
@@ -25,7 +23,7 @@ class MovementPatternsController < ApplicationController
 
     respond_to do |format|
       if @movement_pattern.save
-        format.html { redirect_to movement_patterns_url, notice: "Movement pattern was successfully created." }
+        format.html { redirect_to movement_patterns_url, notice: 'Movement pattern was successfully created.' }
         format.json { render :all, status: :created, location: @movement_patterns }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +36,9 @@ class MovementPatternsController < ApplicationController
   def update
     respond_to do |format|
       if @movement_pattern.update(movement_pattern_params)
-        format.html { redirect_to movement_pattern_url(@movement_pattern), notice: "Movement pattern was successfully updated." }
+        format.html do
+          redirect_to movement_pattern_url(@movement_pattern), notice: 'Movement pattern was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @movement_pattern }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class MovementPatternsController < ApplicationController
     @movement_pattern.destroy!
 
     respond_to do |format|
-      format.html { redirect_to movement_patterns_url, notice: "Movement pattern was successfully destroyed." }
+      format.html { redirect_to movement_patterns_url, notice: 'Movement pattern was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_movement_pattern
-      @movement_pattern = MovementPattern.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def movement_pattern_params
-      params.require(:movement_pattern).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_movement_pattern
+    @movement_pattern = MovementPattern.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def movement_pattern_params
+    params.require(:movement_pattern).permit(:name, :description)
+  end
 end

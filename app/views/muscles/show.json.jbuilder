@@ -1,1 +1,1 @@
-json.partial! "muscles/muscle", muscle: @muscle
+json.partial! 'muscles/muscle', muscle: @muscle
