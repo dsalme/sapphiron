@@ -1,28 +1,27 @@
 require 'rails_helper'
 
-RSpec.describe "tools/edit", type: :view do
-  let(:tool) {
+RSpec.describe 'tools/edit', type: :view do
+  let(:tool) do
     Tool.create!(
-      name: "MyString",
-      description: "MyText",
-      thumbnail_url: "MyString"
+      name: 'MyString',
+      description: 'MyText',
+      thumbnail_url: 'MyString'
     )
-  }
+  end
 
   before(:each) do
     assign(:tool, tool)
   end
 
-  it "renders the edit tool form" do
+  it 'renders the edit tool form' do
     render
 
-    assert_select "form[action=?][method=?]", tool_path(tool), "post" do
+    assert_select 'form[action=?][method=?]', tool_path(tool), 'post' do
+      assert_select 'input[name=?]', 'tool[name]'
 
-      assert_select "input[name=?]", "tool[name]"
+      assert_select 'textarea[name=?]', 'tool[description]'
 
-      assert_select "textarea[name=?]", "tool[description]"
-
-      assert_select "input[name=?]", "tool[thumbnail_url]"
+      assert_select 'input[name=?]', 'tool[thumbnail_url]'
     end
   end
 end
