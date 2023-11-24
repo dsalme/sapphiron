@@ -1,4 +1,8 @@
 class ExercisesController < ApplicationController
+  include ExerciseToolsConcern
+  include ExerciseMusclesConcern
+  include ExerciseMovementPatternsConcern
+  include ExerciseFilterConcern
   before_action :authenticate_user!, only: %i[new create edit update]
   before_action :set_exercise, only: %i[show edit update destroy]
   before_action :set_select_collections, only: %i[edit update new create]
@@ -8,18 +12,16 @@ class ExercisesController < ApplicationController
     @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     @tools = Tool.all
     @muscles = Muscle.all
+    @movement_patterns = MovementPattern.all
   end
 
   def filter
-    exercises = Exercise
-                .includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
-    if params[:tool_id].present? && !params[:tool_id].empty?
-      exercises = exercises.where(tools: { id: params[:tool_id] })
+    exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    FILTER_PARAMS.each do |param, filter|
+      if params[param].present? && !params[param].empty?
+        exercises = exercises.where(filter[:association] => { id: params[param] })
+      end
     end
-    if params[:muscle_id].present? && !params[:muscle_id].empty?
-      exercises = exercises.where(muscles: { id: params[:muscle_id] })
-    end
-    # .order("#{params[:column]} #{params[:direction]}")
     render(partial: 'exercises', locals: { exercises: })
   end
 
@@ -43,13 +45,15 @@ class ExercisesController < ApplicationController
     @tools = Tool.all
   end
 
+  def set_filter_models
+    
+  end
+
   # POST /exercises or /exercises.json
   def create
     @exercise = Exercise.new(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
-    create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
-    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
-    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
-
+    @exercise.user_id = current_user.id
+    create_related_entities(@exercise, exercise_params)
     respond_to do |format|
       if @exercise.save
         format.html { redirect_to exercise_url(@exercise), notice: 'Exercise was successfully created.' }
@@ -63,9 +67,7 @@ class ExercisesController < ApplicationController
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
-    create_or_delete_exercise_tools(@exercise, params[:exercise][:tool_ids])
-    create_or_delete_exercise_movement_patterns(@exercise, params[:exercise][:movement_pattern_ids])
-    create_or_delete_exercise_muscles(@exercise, params[:exercise][:muscle_ids])
+    create_related_entities(@exercise, exercise_params)
     respond_to do |format|
       if @exercise.update(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
         format.html { redirect_to exercise_url(@exercise), notice: 'Exercise was successfully updated.' }
@@ -89,28 +91,10 @@ class ExercisesController < ApplicationController
 
   private
 
-  # tools assignment
-  def create_or_delete_exercise_tools(exercise, tool_ids)
-    exercise.exercise_tools.destroy_all
-    tool_ids.each do |tool|
-      exercise.tools << Tool.find(tool) if !tool.nil? && !tool.empty?
-    end
-  end
-
-  def create_or_delete_exercise_movement_patterns(exercise, movement_pattern_ids)
-    exercise.exercise_movement_patterns.destroy_all
-    movement_pattern_ids.each do |movement_pattern|
-      if !movement_pattern.nil? && !movement_pattern.empty?
-        exercise.movement_patterns << MovementPattern.find(movement_pattern)
-      end
-    end
-  end
-
-  def create_or_delete_exercise_muscles(exercise, muscle_ids)
-    exercise.exercise_muscles.destroy_all
-    muscle_ids.each do |muscle|
-      exercise.muscles << Muscle.find(muscle) if !muscle.nil? && !muscle.empty?
-    end
+  def create_related_entities(exercise, params)
+    create_or_delete_exercise_tools(exercise, params[:tool_ids])
+    create_or_delete_exercise_movement_patterns(exercise, params[:movement_pattern_ids])
+    create_or_delete_exercise_muscles(exercise, params[:muscle_ids])
   end
 
   def set_select_collections
