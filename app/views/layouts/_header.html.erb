@@ -1,10 +1,17 @@
 <!--<header class="flex items-center justify-center">-->
 <header class="bg-gray-800 text-white p-2.5 fixed w-full z-10">
-    <div class="container mx-auto flex flex-row justify-between items-center">
+    <div class="flex flex-row justify-between items-center">
         <div>
             <%= link_to 'SAPPHIRON', root_path, class: 'text-2xl' %>
         </div>
         <div>
+            <% if user_signed_in? %>
+                Logged in as: <%= current_user.email %>
+                <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "border rounded-lg p-2 ml-1" %>
+            <% else %>
+                <%= link_to "Sign in", new_user_session_path, {class: "border rounded-lg p-2 mr-1"} %>
+                <%= link_to "Sign up", new_user_registration_path, {class: "border rounded-lg p-2"} %>
+            <% end %>
         </div>
     </div>
 </header>

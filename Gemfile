@@ -63,6 +63,7 @@ gem 'tailwindcss-rails', '~> 2.0'
 gem 'pg'
 
 # auth gem
+gem "devise", "~> 4.9"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -91,4 +92,7 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem "factory_bot", "~> 6.4"
+  gem 'rexml'
 end
+

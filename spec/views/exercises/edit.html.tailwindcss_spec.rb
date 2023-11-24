@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'exercises/edit', type: :view do
   let(:muscle_group) { MuscleGroup.create!(name: 'Legs') }
   let(:muscle) { Muscle.create!(name: 'Quadriceps', muscle_group:) }
-  let(:exercise) { Exercise.create!(name: 'Squats', description: 'Leg exercise') }
+  let(:exercise) { Exercise.create!(name: 'Squats', description: 'Leg exercise', user: FactoryBot.create(:user)) }
 
   before(:each) do
     assign(:exercise, exercise)
