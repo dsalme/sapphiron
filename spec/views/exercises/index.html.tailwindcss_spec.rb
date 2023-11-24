@@ -8,9 +8,9 @@ RSpec.describe 'exercises/index', type: :view do
   before(:each) do
     # allow_any_instance_of(ActionController::Base).to receive(:rodauth).and_return(double(logged_in?: true))
     assign(:exercises, [
-      Exercise.create!(name: 'Name', user: user),
-      Exercise.create!(name: 'Name2', user: user)
-    ])
+             Exercise.create!(name: 'Name', user: user),
+             Exercise.create!(name: 'Name2', user: user)
+           ])
     assign(:muscle_groups, [muscle_group])
     assign(:muscles, [muscle])
     assign(:tools, [])
