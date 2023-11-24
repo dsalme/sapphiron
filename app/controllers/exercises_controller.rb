@@ -46,7 +46,6 @@ class ExercisesController < ApplicationController
   end
 
   def set_filter_models
-    
   end
 
   # POST /exercises or /exercises.json
