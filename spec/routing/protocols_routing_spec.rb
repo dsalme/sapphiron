@@ -18,7 +18,6 @@ RSpec.describe ProtocolsController, type: :routing do
       expect(get: "/protocols/1/edit").to route_to("protocols#edit", id: "1")
     end
 
-
     it "routes to #create" do
       expect(post: "/protocols").to route_to("protocols#create")
     end

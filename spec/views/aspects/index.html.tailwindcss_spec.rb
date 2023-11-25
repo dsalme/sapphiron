@@ -3,15 +3,15 @@ require 'rails_helper'
 RSpec.describe "aspects/index", type: :view do
   before(:each) do
     assign(:aspects, [
-      Aspect.create!(
-        name: "Name",
-        description: "MyText"
-      ),
-      Aspect.create!(
-        name: "Name",
-        description: "MyText"
-      )
-    ])
+             Aspect.create!(
+               name: "Name",
+               description: "MyText"
+             ),
+             Aspect.create!(
+               name: "Name",
+               description: "MyText"
+             )
+           ])
   end
 
   it "renders a list of aspects" do

@@ -16,7 +16,6 @@ RSpec.describe "protocols/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", protocol_path(protocol), "post" do
-
       assert_select "input[name=?]", "protocol[name]"
 
       assert_select "textarea[name=?]", "protocol[description]"

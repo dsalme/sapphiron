@@ -16,7 +16,6 @@ RSpec.describe "aspects/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", aspect_path(aspect), "post" do
-
       assert_select "input[name=?]", "aspect[name]"
 
       assert_select "textarea[name=?]", "aspect[description]"

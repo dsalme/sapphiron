@@ -1,6 +1,6 @@
 class ProtocolsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_protocol, only: %i[ show edit update destroy ]
+  before_action :set_protocol, only: %i[show edit update destroy]
 
   # GET /protocols or /protocols.json
   def index
@@ -59,13 +59,14 @@ class ProtocolsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_protocol
-      @protocol = Protocol.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def protocol_params
-      params.require(:protocol).permit(:name, :description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_protocol
+    @protocol = Protocol.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def protocol_params
+    params.require(:protocol).permit(:name, :description)
+  end
 end

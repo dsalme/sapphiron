@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe "protocols/show", type: :view do
   before(:each) do
     assign(:protocol, Protocol.create!(
-      name: "Name",
-      description: "MyText"
-    ))
+                        name: "Name",
+                        description: "MyText"
+                      ))
   end
 
   it "renders attributes in <p>" do
