@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_24_145125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "aspects", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "exercise_movement_patterns", force: :cascade do |t|
     t.bigint "exercise_id", null: false
@@ -84,6 +91,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["muscle_group_id"], name: "index_muscles_on_muscle_group_id"
+  end
+
+  create_table "protocols", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tools", force: :cascade do |t|
