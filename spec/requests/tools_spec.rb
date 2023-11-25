@@ -41,6 +41,9 @@ RSpec.describe '/tools', type: :request do
   end
 
   describe 'GET /new' do
+    before do
+      sign_in FactoryBot.create(:user)
+    end
     it 'renders a successful response' do
       get new_tool_url
       expect(response).to be_successful

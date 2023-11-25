@@ -12,6 +12,7 @@ class ExercisesController < ApplicationController
     @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     @tools = Tool.all
     @muscles = Muscle.all
+    @muscle_groups = MuscleGroup.all
     @movement_patterns = MovementPattern.all
   end
 
@@ -19,7 +20,7 @@ class ExercisesController < ApplicationController
     exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
     FILTER_PARAMS.each do |param, filter|
       if params[param].present? && !params[param].empty?
-        exercises = exercises.where(filter[:association] => { id: params[param] })
+        exercises = exercises.where(filter[:association] => { "#{filter[:field]}": params[param] })
       end
     end
     render(partial: 'exercises', locals: { exercises: })
@@ -98,6 +99,7 @@ class ExercisesController < ApplicationController
 
   def set_select_collections
     @muscles = Muscle.all
+    @muscle_groups = MuscleGroup.all
     @tools = Tool.all
     @movement_patterns = MovementPattern.all
   end

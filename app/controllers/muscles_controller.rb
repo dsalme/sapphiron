@@ -1,4 +1,5 @@
 class MusclesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_muscle, only: %i[show edit update destroy]
   before_action :set_select_collections, only: %i[edit update new create]
 
