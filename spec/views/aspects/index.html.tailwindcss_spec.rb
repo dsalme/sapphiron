@@ -8,7 +8,7 @@ RSpec.describe "aspects/index", type: :view do
                description: "MyText"
              ),
              Aspect.create!(
-               name: "Name",
+               name: "Name2",
                description: "MyText"
              )
            ])

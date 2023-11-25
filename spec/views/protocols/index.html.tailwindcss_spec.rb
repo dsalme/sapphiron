@@ -8,7 +8,7 @@ RSpec.describe "protocols/index", type: :view do
                description: "MyText"
              ),
              Protocol.create!(
-               name: "Name",
+               name: "Name2",
                description: "MyText"
              )
            ])
