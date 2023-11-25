@@ -22,7 +22,7 @@ class ProtocolsController < ApplicationController
 
   # POST /protocols or /protocols.json
   def create
-    new_protocol = {**protocol_params, :measure_unit => protocol_params[:measure_unit].to_i}
+    new_protocol = { **protocol_params, :measure_unit => protocol_params[:measure_unit].to_i }
     @protocol = Protocol.new(new_protocol)
 
     respond_to do |format|
@@ -38,7 +38,7 @@ class ProtocolsController < ApplicationController
 
   # PATCH/PUT /protocols/1 or /protocols/1.json
   def update
-    new_protocol = {**protocol_params, :measure_unit => protocol_params[:measure_unit].to_i}
+    new_protocol = { **protocol_params, :measure_unit => protocol_params[:measure_unit].to_i }
     respond_to do |format|
       if @protocol.update(new_protocol)
         format.html { redirect_to protocol_url(@protocol), notice: "Protocol was successfully updated." }
