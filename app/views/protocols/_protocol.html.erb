@@ -7,6 +7,10 @@
       <%= protocol.description %>
     </td>
     <td class="table-cell text-center border border-gray-400">
+      <% logger.debug protocol%>
+      <%= protocol.measure_unit.humanize.capitalize%>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
       # blocks
     </td>
     <td class="table-cell text-center border border-gray-400">
@@ -35,7 +39,13 @@
     </p>
 
     <p class="my-5">
-      <strong class="block font-medium mb-1"># Exercises:</strong>
+      <strong class="block font-medium mb-1">Measure unit:</strong>
+      <% logger.debug protocol%>
+      <%= protocol.measure_unit.humanize.capitalize %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1"># Blocks:</strong>
       # blocks
     </p>
 

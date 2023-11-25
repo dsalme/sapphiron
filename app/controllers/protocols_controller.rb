@@ -22,7 +22,8 @@ class ProtocolsController < ApplicationController
 
   # POST /protocols or /protocols.json
   def create
-    @protocol = Protocol.new(protocol_params)
+    new_protocol = {**protocol_params, :measure_unit => protocol_params[:measure_unit].to_i}
+    @protocol = Protocol.new(new_protocol)
 
     respond_to do |format|
       if @protocol.save
@@ -37,8 +38,9 @@ class ProtocolsController < ApplicationController
 
   # PATCH/PUT /protocols/1 or /protocols/1.json
   def update
+    new_protocol = {**protocol_params, :measure_unit => protocol_params[:measure_unit].to_i}
     respond_to do |format|
-      if @protocol.update(protocol_params)
+      if @protocol.update(new_protocol)
         format.html { redirect_to protocol_url(@protocol), notice: "Protocol was successfully updated." }
         format.json { render :show, status: :ok, location: @protocol }
       else
@@ -67,6 +69,6 @@ class ProtocolsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def protocol_params
-    params.require(:protocol).permit(:name, :description)
+    params.require(:protocol).permit(:name, :description, :measure_unit)
   end
 end
