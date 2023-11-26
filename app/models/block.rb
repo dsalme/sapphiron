@@ -1,4 +1,5 @@
 class Block < ApplicationRecord
+  belongs_to :user
   has_one :protocol
   has_one :aspect
   has_many :exercises
