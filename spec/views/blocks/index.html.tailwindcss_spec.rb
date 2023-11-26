@@ -3,23 +3,23 @@ require 'rails_helper'
 RSpec.describe "blocks/index", type: :view do
   before(:each) do
     assign(:blocks, [
-      Block.create!(
-        name: "Name",
-        description: "MyText",
-        protocol: nil,
-        aspect: nil,
-        series: 2,
-        duration: 3
-      ),
-      Block.create!(
-        name: "Name",
-        description: "MyText",
-        protocol: nil,
-        aspect: nil,
-        series: 2,
-        duration: 3
-      )
-    ])
+             Block.create!(
+               name: "Name",
+               description: "MyText",
+               protocol: nil,
+               aspect: nil,
+               series: 2,
+               duration: 3
+             ),
+             Block.create!(
+               name: "Name",
+               description: "MyText",
+               protocol: nil,
+               aspect: nil,
+               series: 2,
+               duration: 3
+             )
+           ])
   end
 
   it "renders a list of blocks" do

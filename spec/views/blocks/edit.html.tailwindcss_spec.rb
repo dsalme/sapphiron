@@ -20,7 +20,6 @@ RSpec.describe "blocks/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", block_path(block), "post" do
-
       assert_select "input[name=?]", "block[name]"
 
       assert_select "textarea[name=?]", "block[description]"

@@ -1,5 +1,5 @@
 class BlocksController < ApplicationController
-  before_action :set_block, only: %i[ show edit update destroy ]
+  before_action :set_block, only: %i[show edit update destroy]
 
   # GET /blocks or /blocks.json
   def index
@@ -59,13 +59,14 @@ class BlocksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_block
-      @block = Block.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def block_params
-      params.require(:block).permit(:name, :description, :protocol_id, :aspect_id, :series, :duration)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_block
+    @block = Block.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def block_params
+    params.require(:block).permit(:name, :description, :protocol_id, :aspect_id, :series, :duration)
+  end
 end
