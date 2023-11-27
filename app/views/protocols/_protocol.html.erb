@@ -11,7 +11,7 @@
       <%= protocol.measure_unit.humanize.capitalize%>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      # blocks
+      <%= protocol.blocks.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <div class="flex flex-row items-center justify-evenly">
@@ -46,7 +46,7 @@
 
     <p class="my-5">
       <strong class="block font-medium mb-1"># Blocks:</strong>
-      # blocks
+      <%= protocol.blocks.length %>
     </p>
 
     <% if action_name != "show" %>

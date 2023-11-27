@@ -52,11 +52,21 @@ class ProtocolsController < ApplicationController
 
   # DELETE /protocols/1 or /protocols/1.json
   def destroy
-    @protocol.destroy!
+    begin
+      @protocol.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to protocols_url, notice: "Protocol was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to protocols_url, notice: "Protocol was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::DeleteRestrictionError
+      respond_to do |format|
+        format.html { redirect_to protocols_url, alert: "Can't delete protocol because it's associated with a block." }
+        format.json {
+          render json: { error: "Can't delete protocol because it's associated with a block." },
+                 status: :unprocessable_entity
+        }
+      end
     end
   end
 

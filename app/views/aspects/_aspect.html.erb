@@ -7,7 +7,7 @@
       <%= aspect.description %>
     </td>
     <td class="table-cell text-center border border-gray-400">
-      # blocks
+      <%= aspect.blocks.length %>
     </td>
     <td class="table-cell text-center border border-gray-400">
       <div class="flex flex-row items-center justify-evenly">
@@ -36,7 +36,7 @@
 
     <p class="my-5">
       <strong class="block font-medium mb-1"># blocks:</strong>
-      # blocks
+      <%= aspect.blocks.length %>
     </p>
 
     <% if action_name != "show" %>
