@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "blocks/show", type: :view do
+  let(:protocol) { Protocol.create!(name: "Protocol") }
+  let(:aspect) { Aspect.create!(name: "Aspect") }
   before(:each) do
     assign(:block, Block.create!(
                      name: "Name",
                      description: "MyText",
-                     protocol: nil,
-                     aspect: nil,
+                     protocol: protocol,
+                     aspect: aspect,
                      series: 2,
-                     duration: 3
+                     duration: 3,
+                     user: FactoryBot.create(:user)
                    ))
   end
 
