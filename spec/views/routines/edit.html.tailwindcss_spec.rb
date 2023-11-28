@@ -5,7 +5,7 @@ RSpec.describe "routines/edit", type: :view do
     Routine.create!(
       name: "MyString",
       description: "MyText",
-      user: nil
+      user: FactoryBot.create(:user)
     )
   }
 
