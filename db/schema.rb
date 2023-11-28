@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_26_204118) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_28_104310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_204118) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order"
     t.index ["block_id"], name: "index_block_exercises_on_block_id"
     t.index ["exercise_id"], name: "index_block_exercises_on_exercise_id"
   end
@@ -136,6 +137,26 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_204118) do
     t.integer "measure_unit", default: 0
   end
 
+  create_table "routine_blocks", force: :cascade do |t|
+    t.bigint "routine_id", null: false
+    t.bigint "block_id", null: false
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["block_id"], name: "index_routine_blocks_on_block_id"
+    t.index ["routine_id"], name: "index_routine_blocks_on_routine_id"
+  end
+
+  create_table "routines", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "difficulty"
+    t.index ["user_id"], name: "index_routines_on_user_id"
+  end
+
   create_table "tools", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -173,4 +194,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_26_204118) do
   add_foreign_key "exercise_variants", "exercises", column: "variant_id"
   add_foreign_key "exercises", "users"
   add_foreign_key "muscles", "muscle_groups"
+  add_foreign_key "routine_blocks", "blocks"
+  add_foreign_key "routine_blocks", "routines"
+  add_foreign_key "routines", "users"
 end

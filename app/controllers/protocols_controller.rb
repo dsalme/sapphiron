@@ -8,8 +8,7 @@ class ProtocolsController < ApplicationController
   end
 
   # GET /protocols/1 or /protocols/1.json
-  def show
-  end
+  def show; end
 
   # GET /protocols/new
   def new
@@ -17,17 +16,16 @@ class ProtocolsController < ApplicationController
   end
 
   # GET /protocols/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /protocols or /protocols.json
   def create
-    new_protocol = { **protocol_params, :measure_unit => protocol_params[:measure_unit].to_i }
+    new_protocol = { **protocol_params, measure_unit: protocol_params[:measure_unit].to_i }
     @protocol = Protocol.new(new_protocol)
 
     respond_to do |format|
       if @protocol.save
-        format.html { redirect_to protocol_url(@protocol), notice: "Protocol was successfully created." }
+        format.html { redirect_to protocol_url(@protocol), notice: 'Protocol was successfully created.' }
         format.json { render :show, status: :created, location: @protocol }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,10 +36,10 @@ class ProtocolsController < ApplicationController
 
   # PATCH/PUT /protocols/1 or /protocols/1.json
   def update
-    new_protocol = { **protocol_params, :measure_unit => protocol_params[:measure_unit].to_i }
+    new_protocol = { **protocol_params, measure_unit: protocol_params[:measure_unit].to_i }
     respond_to do |format|
       if @protocol.update(new_protocol)
-        format.html { redirect_to protocol_url(@protocol), notice: "Protocol was successfully updated." }
+        format.html { redirect_to protocol_url(@protocol), notice: 'Protocol was successfully updated.' }
         format.json { render :show, status: :ok, location: @protocol }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,25 +50,27 @@ class ProtocolsController < ApplicationController
 
   # DELETE /protocols/1 or /protocols/1.json
   def destroy
-    begin
-      @protocol.destroy!
+    @protocol.destroy!
 
-      respond_to do |format|
-        format.html { redirect_to protocols_url, notice: "Protocol was successfully destroyed." }
-        format.json { head :no_content }
-      end
-    rescue ActiveRecord::DeleteRestrictionError
-      respond_to do |format|
-        format.html { redirect_to protocols_url, alert: "Can't delete protocol because it's associated with a block." }
-        format.json {
-          render json: { error: "Can't delete protocol because it's associated with a block." },
-                 status: :unprocessable_entity
-        }
-      end
+    respond_to do |format|
+      format.html { redirect_to protocols_url, notice: 'Protocol was successfully destroyed.' }
+      format.json { head :no_content }
     end
+  rescue ActiveRecord::DeleteRestrictionError
+    delete_restriction_error_response
   end
 
   private
+
+  def delete_restriction_error_response
+    respond_to do |format|
+      format.html { redirect_to protocols_url, alert: "Can't delete protocol because it's associated with a block." }
+      format.json do
+        render json: { error: "Can't delete protocol because it's associated with a block." },
+               status: :unprocessable_entity
+      end
+    end
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_protocol

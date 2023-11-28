@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :blocks
-  resources :aspects
-  devise_for :users
   root 'home#index'
+  # public routes
   resources :exercises do
     collection do
       get 'filter'
     end
   end
+  resources :routines
+  resources :blocks
+  # private routes
+  resources :aspects
+  devise_for :users
   resources :movement_patterns
   resources :muscles
   resources :muscle_groups
