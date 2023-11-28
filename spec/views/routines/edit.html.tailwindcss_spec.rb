@@ -17,7 +17,6 @@ RSpec.describe "routines/edit", type: :view do
     render
 
     assert_select "form[action=?][method=?]", routine_path(routine), "post" do
-
       assert_select "input[name=?]", "routine[name]"
 
       assert_select "textarea[name=?]", "routine[description]"

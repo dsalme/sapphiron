@@ -18,7 +18,6 @@ RSpec.describe RoutinesController, type: :routing do
       expect(get: "/routines/1/edit").to route_to("routines#edit", id: "1")
     end
 
-
     it "routes to #create" do
       expect(post: "/routines").to route_to("routines#create")
     end
