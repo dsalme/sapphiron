@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "routines/index", type: :view do
-  let(:user) {FactoryBot.create(:user)}
+  let(:user) { FactoryBot.create(:user) }
   before(:each) do
     assign(:routines, [
              Routine.create!(
