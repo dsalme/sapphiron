@@ -27,7 +27,7 @@ Things you may want to cover:
     - How pre-commit was setup:
         https://betterprogramming.pub/git-hooks-for-your-rails-app-to-run-rubocop-brakeman-and-rspec-on-push-or-commit-ab51cd65e713
 
-* Database creation
+* Database creation manually (not needed, docker-compose creates it for you)
     `docker-compose run web db:create`
 
 * Database manually run migrations 
@@ -41,6 +41,10 @@ Things you may want to cover:
 
 * How to run the test suite:
     `docker-compose run web rspec`
+
+## Keeping your docker env clean
+
+* When you run any `docker-compose run web <command>` command, when running tests manually for example, it creates a new container, runs the command and exits, leaving a stale container in your docker containers list. In order to keep it clean, you can add a `--rm` flag, so that when the command runs, the container is automatically removed afterwards, like so: `docker-compose run --rm web <command>`
 
 * Services (job queues, cache servers, search engines, etc.)
 
