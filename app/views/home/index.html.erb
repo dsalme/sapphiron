@@ -2,9 +2,6 @@
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
   <% end %>
-  <div class="flex flex-row">
-    <%= image_tag 'sapphiron_dumbell.png', class: 'w-32 h-32'%>
-  </div>
   <div class="lg:flex sm:gap-x-[24px] lg:justify-center lg:flex-nowrap w-96 h-96">
     <%= render partial: 'shared/body_front_basic_map' %>
     <%= render partial: 'shared/body_back_basic_map' %>

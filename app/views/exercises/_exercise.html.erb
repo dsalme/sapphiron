@@ -43,8 +43,10 @@
         <%= link_to exercise, {"data-turbo-frame": "_top"} do %>
           <%= render 'shared/view_icon' %>
         <% end %>
-        <%= link_to edit_exercise_path(exercise), {class: "border-1 border-solid rounded-sm", "data-turbo-frame": "_top"} do %>
-          <%= render 'shared/edit_icon' %>
+        <% if user_signed_in? %>
+          <%= link_to edit_exercise_path(exercise), {class: "border-1 border-solid rounded-sm", "data-turbo-frame": "_top"} do %>
+            <%= render 'shared/edit_icon' %>
+          <% end %>
         <% end %>
         <hr class="mt-6">
       </div>

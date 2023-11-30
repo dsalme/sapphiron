@@ -44,16 +44,15 @@ class ExercisesController < ApplicationController
     @movement_patterns = MovementPattern.all
     @muscle_groups = MuscleGroup.includes(:muscles)
     @tools = Tool.all
-  end
-
-  def set_filter_models
+    @exercise_muscles = @exercise.exercise_muscles
+    logger.debug @exercise_muscles
   end
 
   # POST /exercises or /exercises.json
   def create
     @exercise = Exercise.new(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
     @exercise.user_id = current_user.id
-    create_related_entities(@exercise, exercise_params)
+    create_related_entities(@exercise, exercise_params, params)
     respond_to do |format|
       if @exercise.save
         format.html { redirect_to exercise_url(@exercise), notice: 'Exercise was successfully created.' }
@@ -67,9 +66,9 @@ class ExercisesController < ApplicationController
 
   # PATCH/PUT /exercises/1 or /exercises/1.json
   def update
-    create_related_entities(@exercise, exercise_params)
+    create_related_entities(@exercise, exercise_params, params)
     respond_to do |format|
-      if @exercise.update(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids))
+      if @exercise.update(exercise_params.except(:tool_ids, :movement_pattern_ids, :muscle_ids, :predominances))
         format.html { redirect_to exercise_url(@exercise), notice: 'Exercise was successfully updated.' }
         format.json { render :show, status: :ok, location: @exercise }
       else
@@ -91,10 +90,10 @@ class ExercisesController < ApplicationController
 
   private
 
-  def create_related_entities(exercise, params)
-    create_or_delete_exercise_tools(exercise, params[:tool_ids])
-    create_or_delete_exercise_movement_patterns(exercise, params[:movement_pattern_ids])
-    create_or_delete_exercise_muscles(exercise, params[:muscle_ids])
+  def create_related_entities(exercise, exercise_params, params)
+    create_or_delete_exercise_tools(exercise, exercise_params[:tool_ids])
+    create_or_delete_exercise_movement_patterns(exercise, exercise_params[:movement_pattern_ids])
+    create_or_delete_exercise_muscles(exercise, exercise_params[:muscle_ids], params[:predominances])
   end
 
   def set_select_collections
@@ -106,12 +105,20 @@ class ExercisesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_exercise
-    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs).find(params[:id])
+    @exercise = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs,
+                                  :exercise_muscles).find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
   def exercise_params
-    params.require(:exercise).permit(:name, :description, :difficulty, tool_ids: [], movement_pattern_ids: [],
-                                                                       muscle_ids: [])
+    params.require(:exercise).permit(
+      :name,
+      :description,
+      :difficulty,
+      tool_ids: [],
+      movement_pattern_ids: [],
+      muscle_ids: [],
+      predominances: []
+    )
   end
 end

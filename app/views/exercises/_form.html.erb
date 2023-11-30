@@ -1,4 +1,4 @@
-<%= form_with(model: exercise, class: "contents") do |form| %>
+<%= form_with(model: exercise, class: "contents exercises-form") do |form| %>
   <% if exercise.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(exercise.errors.count, "error") %> prohibited this exercise from being saved:</h2>
@@ -11,58 +11,72 @@
     </div>
   <% end %>
 
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  <div class="exercises-text-fields">
+    <div class="my-5">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+    <div class="my-5">
+      <%= form.label :difficulty %>
+      <%= form.text_field :difficulty, class: "shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
   </div>
+  
 
   <div class="my-5">
     <%= form.label :description %>
     <%= form.text_area :description, rows: 4, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :difficulty %>
-    <%= form.text_field :difficulty, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+  
 
   <div class="flex flex-col gap-3">
-    <div class="flex flex-col">
-      <%= form.label :muscle_groups %>
-      <% @muscle_groups.each do |mg|%>
-        <details>
-          <summary><%= mg.name %></summary>
-          <div class="flex flex-col ml-1">
-            <%= 
-              form.collection_check_boxes :muscle_ids, mg.muscles,:id,:name, {selected: exercise.muscle_ids, 
-              include_blank: false}, {:multiple => true, size: mg.muscles.length } do |el|
-            %>
-              <div class="flex flex-row justify-start items-center">
-                  <%= el.check_box(class: 'mr-2') %> <%= el.label %>
+    <div class="flex flex-row">
+      <div class="flex flex-col w-96">
+        Muscles
+        <% @muscle_groups.each do |mg|%>
+          <details <%= if @exercise_muscles && @exercise_muscles.find_by(muscle_id: mg.muscles.map {|m| m.id}).present? then "open" end %>>
+            <summary><%= mg.name %> (click to expand)</summary>
+            <turbo-frame>
+              <div class="muscles-table-grid ml-1">
+                  <div>Check</div>
+                  <div>Muscle</div>
+                  <div>Predominance</div>
+                  <%= 
+                    form.collection_check_boxes :muscle_ids, mg.muscles,:id,:name, {selected: exercise.muscle_ids, 
+                    include_blank: false}, {:multiple => true, size: mg.muscles.length } do |el|
+                  %>
+                    <div><%= el.check_box(class: 'mr-2') %> </div>
+                    <div><%= el.label %></div>
+                    <div><%= text_field('predominances', el.value, {value: if @exercise_muscles then @exercise_muscles.find_by(muscle_id: el.value)&.predominance end }) %></div>
+                  <% end %>
               </div>
-            <% end %>
-          </div>
-        </details>
-      <% end %>  
+            </turbo-frame>
+          </details>
+        <% end %>  
+      </div>
+      <div>
+        
+      </div>
     </div>
-
+    
     <div class="flex flex-col">
-      <%= form.label :tools %>
-        <%= 
-          form.collection_check_boxes :tool_ids, @tools,:id,:name, {selected: exercise.tool_ids, 
-          include_blank: false}, {:multiple => true, size: @tools.length } do |el|
-        %>
-          <div class="flex flex-row justify-start items-center">
-            <%= el.check_box %> <%= el.label(class: 'mx-2') %>
-            <% if el.object.thumbnail_url.present? && lookup_context.exists?(el.object.thumbnail_url, [], true) %>
-              <%= render partial: el.object.thumbnail_url %>
-            <% end %>
-          </div>
+      <%= form.label :tools%>
+      <%= 
+        form.collection_check_boxes :tool_ids, @tools,:id,:name, {selected: exercise.tool_ids, 
+        include_blank: false}, {:multiple => true, size: @tools.length } do |el|
+      %>
+      <div class="flex flex-row justify-start items-center">
+        <%= el.check_box %> <%= el.label(class: 'mx-2') %>
+        <% if el.object.thumbnail_url.present? && lookup_context.exists?(el.object.thumbnail_url, [], true) %>
+          <%= render partial: el.object.thumbnail_url %>
         <% end %>
+      </div>
+      <% end %>
     </div>
 
     <div class="flex flex-col">
-      <%= form.label :movement_patterns %>
+      <%= form.label :movement_patterns%>
       <%= 
         form.collection_check_boxes :movement_pattern_ids, @movement_patterns,:id,:name, {selected: exercise.movement_pattern_ids, 
         include_blank: false}, {:multiple => true, size: @movement_patterns.length } do |el|

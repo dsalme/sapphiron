@@ -8,10 +8,16 @@ module ExerciseMusclesConcern
     private
 
     # muscles assignment
-    def create_or_delete_exercise_muscles(exercise, muscle_ids)
+    def create_or_delete_exercise_muscles(exercise, muscle_ids, predominances)
       exercise.exercise_muscles.destroy_all
       muscle_ids.each do |muscle|
-        exercise.muscles << Muscle.find(muscle) if !muscle.nil? && !muscle.empty?
+        next unless !muscle.nil? && !muscle.empty?
+
+        exercise.exercise_muscles << ExerciseMuscle.create!(
+          muscle: Muscle.find(muscle),
+          exercise:,
+          predominance: predominances[muscle]
+        )
       end
     end
   end
