@@ -1,0 +1,23 @@
+<% if action_name != "show" %>
+<turbo-frame id="protocols">
+  <table class="table table-fixed w-full border border-gray-400">
+    <thead class="table-header-group">
+      <tr class="table-row">
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Name</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Description</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Measure Unit</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400"># Blocks</th>
+        <th class="table-cell text-center px-4 py-2 text-emerald-600 border border-gray-400">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% protocols.each do |protocol| %>
+          <%= render protocol %>
+      <% end %>
+    </tbody>
+  </table>
+</turbo-frame>
+<% end %>
+<% if action_name == "show" %>
+  <%= render protocol%>
+<% end %>

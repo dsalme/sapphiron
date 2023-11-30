@@ -1,4 +1,5 @@
 class MuscleGroupsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_muscle_group, only: %i[show edit update destroy]
 
   # GET /muscle_groups or /muscle_groups.json

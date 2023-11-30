@@ -5,4 +5,4 @@ set -e
 cd "${0%/*}/.."
 
 echo "Running tests"
-docker-compose run -T web rspec
+docker-compose run -T --rm web rspec

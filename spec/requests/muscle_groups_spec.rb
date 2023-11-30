@@ -41,6 +41,9 @@ RSpec.describe '/muscle_groups', type: :request do
   end
 
   describe 'GET /new' do
+    before do
+      sign_in FactoryBot.create(:user)
+    end
     it 'renders a successful response' do
       get new_muscle_group_url
       expect(response).to be_successful

@@ -10,10 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_28_104310) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "aspects", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "block_exercises", force: :cascade do |t|
+    t.bigint "block_id", null: false
+    t.bigint "exercise_id", null: false
+    t.integer "repetitions"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order"
+    t.index ["block_id"], name: "index_block_exercises_on_block_id"
+    t.index ["exercise_id"], name: "index_block_exercises_on_exercise_id"
+  end
+
+  create_table "block_inner_blocks", force: :cascade do |t|
+    t.bigint "block_id", null: false
+    t.bigint "inner_block_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["block_id"], name: "index_block_inner_blocks_on_block_id"
+    t.index ["inner_block_id"], name: "index_block_inner_blocks_on_inner_block_id"
+  end
+
+  create_table "blocks", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "protocol_id", null: false
+    t.bigint "aspect_id", null: false
+    t.integer "series"
+    t.integer "duration"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["aspect_id"], name: "index_blocks_on_aspect_id"
+    t.index ["protocol_id"], name: "index_blocks_on_protocol_id"
+    t.index ["user_id"], name: "index_blocks_on_user_id"
+  end
 
   create_table "exercise_movement_patterns", force: :cascade do |t|
     t.bigint "exercise_id", null: false
@@ -86,6 +129,34 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
     t.index ["muscle_group_id"], name: "index_muscles_on_muscle_group_id"
   end
 
+  create_table "protocols", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "measure_unit", default: 0
+  end
+
+  create_table "routine_blocks", force: :cascade do |t|
+    t.bigint "routine_id", null: false
+    t.bigint "block_id", null: false
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["block_id"], name: "index_routine_blocks_on_block_id"
+    t.index ["routine_id"], name: "index_routine_blocks_on_routine_id"
+  end
+
+  create_table "routines", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "difficulty"
+    t.index ["user_id"], name: "index_routines_on_user_id"
+  end
+
   create_table "tools", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -106,6 +177,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "block_exercises", "blocks"
+  add_foreign_key "block_exercises", "exercises"
+  add_foreign_key "block_inner_blocks", "blocks"
+  add_foreign_key "block_inner_blocks", "blocks", column: "inner_block_id"
+  add_foreign_key "blocks", "aspects"
+  add_foreign_key "blocks", "protocols"
+  add_foreign_key "blocks", "users"
   add_foreign_key "exercise_movement_patterns", "exercises"
   add_foreign_key "exercise_movement_patterns", "movement_patterns"
   add_foreign_key "exercise_muscles", "exercises"
@@ -116,4 +194,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_23_164131) do
   add_foreign_key "exercise_variants", "exercises", column: "variant_id"
   add_foreign_key "exercises", "users"
   add_foreign_key "muscles", "muscle_groups"
+  add_foreign_key "routine_blocks", "blocks"
+  add_foreign_key "routine_blocks", "routines"
+  add_foreign_key "routines", "users"
 end

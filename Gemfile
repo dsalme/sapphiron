@@ -60,6 +60,8 @@ gem 'faker'
 
 gem 'tailwindcss-rails', '~> 2.0'
 
+gem "dartsass-rails", "~> 0.5.0"
+
 gem 'pg'
 
 # auth gem
@@ -95,4 +97,3 @@ group :test do
   gem "factory_bot", "~> 6.4"
   gem 'rexml'
 end
-

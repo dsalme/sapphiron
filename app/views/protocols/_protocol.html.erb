@@ -1,0 +1,58 @@
+<% if action_name != "show" %>
+  <tr class="table-row">
+    <td class="table-cell text-center border border-gray-400">
+      <%= protocol.name %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= protocol.description %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <% logger.debug protocol%>
+      <%= protocol.measure_unit.humanize.capitalize%>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <%= protocol.blocks.length %>
+    </td>
+    <td class="table-cell text-center border border-gray-400">
+      <div class="flex flex-row items-center justify-evenly">
+        <%= link_to protocol, {"data-turbo-frame": "_top"} do %>
+          <%= render 'shared/view_icon' %>
+        <% end %>
+        <%= link_to edit_protocol_path(protocol), {class: "border-1 border-solid rounded-sm", "data-turbo-frame": "_top"} do %>
+          <%= render 'shared/edit_icon' %>
+        <% end %>
+        <hr class="mt-6">
+      </div>
+    </td>
+  </tr>
+<% end %>
+<% if action_name == "show" %>
+  <div id="<%= dom_id protocol %>" class="border-solid rounded-md border-2 p-2 m-1">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Name:</strong>
+      <%= protocol.name %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Description:</strong>
+      <%= protocol.description %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Measure unit:</strong>
+      <% logger.debug protocol%>
+      <%= protocol.measure_unit.humanize.capitalize %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1"># Blocks:</strong>
+      <%= protocol.blocks.length %>
+    </p>
+
+    <% if action_name != "show" %>
+      <%= link_to "Show this protocol", protocol, {class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium"} %>
+      <%= link_to "Edit this protocol", edit_protocol_path(protocol), {class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium"} %>
+      <hr class="mt-6">
+    <% end %>
+  </div>
+<% end %>
