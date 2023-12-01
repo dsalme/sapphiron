@@ -13,9 +13,9 @@
   <div class="my-2 flex flex-row gap-3">
     <%= form_tag filter_exercises_path, method: :get, remote: true, id: 'filter-form' do %>
       <%= select_tag 'muscle_group_id', options_from_collection_for_select(@muscle_groups, 'id', 'name'), {prompt: "Muscle Group"} %>
-      <%= select_tag 'muscle_id', options_from_collection_for_select(@muscles, 'id', 'name'), {prompt: "Muscles"} %>
-      <%= select_tag 'movement_pattern_id', options_from_collection_for_select(@movement_patterns, 'id', 'name'), {prompt: "Mov. Pattern"} %>
-      <%= select_tag 'tool_id', options_from_collection_for_select(@tools, 'id', 'name'), {prompt: "Tools"} %>
+      <%= select_tag 'muscle_id', options_from_collection_for_select(@muscles, 'name', 'name', {selected: params[:muscle_name]}), {prompt: "Muscles"} %>
+      <%= select_tag 'movement_pattern_id', options_from_collection_for_select(@movement_patterns, 'name', 'name'), {prompt: "Mov. Pattern"} %>
+      <%= select_tag 'tool_id', options_from_collection_for_select(@tools, 'name', 'name'), {prompt: "Tools"} %>
       <%= submit_tag 'Filter', {class: "rounded-lg py-3 px-5 bg-blue-600 text-white font-medium","data-turbo-frame": 'exercise-table'} %>
     <% end %>
   </div>
