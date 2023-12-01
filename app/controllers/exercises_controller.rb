@@ -10,6 +10,11 @@ class ExercisesController < ApplicationController
   # GET /exercises or /exercises.json
   def index
     @exercises = Exercise.includes(:tools, :movement_patterns, :muscles, :variants, :variant_ofs)
+    FILTER_PARAMS.each do |param, filter|
+      if params[param].present? && !params[param].empty?
+        @exercises = @exercises.where(filter[:association] => { "#{filter[:field]}": params[param] })
+      end
+    end
     @tools = Tool.all
     @muscles = Muscle.all
     @muscle_groups = MuscleGroup.all
