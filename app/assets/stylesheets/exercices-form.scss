@@ -1,0 +1,15 @@
+.exercises-form {
+    .exercises-text-fields {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        column-gap: 10px;
+    }
+    div.muscles-table-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1rem;
+        row-gap: 1rem;
+        justify-items: center;
+        align-items: center;
+    }
+}
